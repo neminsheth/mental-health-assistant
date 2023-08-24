@@ -4,6 +4,7 @@ import 'package:video_thumbnail_imageview/video_thumbnail_imageview.dart';
 
 import 'general/emoticon_card.dart';
 import 'general/excercise.dart';
+import 'general/youtube.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -77,7 +78,7 @@ class _FeedPageState extends State<FeedPage> {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround, // Adjust the alignment as needed
-                  children: [
+                  children: const [
                     ExerciseTile(
                       exercise: 'Speaking Skills',
                       subExercise: '16 Exercises',
@@ -135,30 +136,41 @@ class _FeedPageState extends State<FeedPage> {
               ),
               SizedBox(
                 height: 220,
-                child: ListView.builder(
+                child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  itemCount: 2, // Update the item count as needed
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: VTImageView(
-                        videoUrl: "VIDEO URL $index", // Update the video URLs
-                        width: 200.0,
-                        height: 200.0,
-                        errorBuilder: (context, error, stack) {
-                          return Container(
-                            width: 200.0,
-                            height: 200.0,
-                            color: Colors.blue,
-                            child: Center(
-                              child: Text("Image Loading Error"),
-                            ),
-                          );
-                        },
-                        assetPlaceHolder: '',
+                  child: Row(
+                    children: [
+                      VideoThumbnailContainer(
+                        videoUrl: "https://youtu.be/uinxopMRhJY?si=XcMHoLVLBlj-b6im",
+                        width: 150.0,
+                        height: 100.0,
                       ),
-                    );
-                  },
+                      SizedBox(width: 10),
+                      VideoThumbnailContainer(
+                        videoUrl: "https://youtu.be/uinxopMRhJY?si=XcMHoLVLBlj-b6im",
+                        width: 150.0,
+                        height: 100.0,
+                      ),
+                      SizedBox(width: 10),
+                      VideoThumbnailContainer(
+                        videoUrl: "https://youtu.be/uinxopMRhJY?si=XcMHoLVLBlj-b6im",
+                        width: 150.0,
+                        height: 100.0,
+                      ),
+                      SizedBox(width: 10),
+                      VideoThumbnailContainer(
+                        videoUrl: "https://youtu.be/uinxopMRhJY?si=XcMHoLVLBlj-b6im",
+                        width: 150.0,
+                        height: 100.0,
+                      ),
+                      SizedBox(width: 10),
+                      VideoThumbnailContainer(
+                        videoUrl: "https://youtu.be/uinxopMRhJY?si=XcMHoLVLBlj-b6im",
+                        width: 150.0,
+                        height: 100.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -38,6 +38,7 @@ dependencies:
   flashy_tab_bar2: ^0.0.6
   url_launcher: ^6.1.11
   video_thumbnail_imageview: ^0.0.5
+  youtube_player_flutter: ^8.1.2
 
 dev_dependencies:
   flutter_test:

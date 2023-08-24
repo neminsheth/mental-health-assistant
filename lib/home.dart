@@ -53,8 +53,8 @@ class _HomePageState extends State<HomePage> {
             title: Text('Chat', style: TextStyle(color: AppColors.white)),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.settings, color: AppColors.white),
-            title: Text('Settings', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.person, color: AppColors.white),
+            title: Text('Profile', style: TextStyle(color: AppColors.white)),
           ),
         ],
       ),
