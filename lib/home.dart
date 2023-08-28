@@ -1,7 +1,7 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:ipd/food.dart';
 import 'package:ipd/profile.dart';
-//import 'package:flashy_tab_bar/flashy_tab_bar.dart'; // Import the package
 import 'colors.dart';
 import 'feed.dart';
 
@@ -15,7 +15,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     FeedPage(),
-    Page(),
+    FoodPage(),
     Page(),
     ProfilePage(),
   ];
