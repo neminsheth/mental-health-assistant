@@ -58,46 +58,6 @@ class FoodPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Container(
                     height: 100,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        SvgPicture.asset(
-                          popularDiets[index].iconPath,
-                          width: 65,
-                          height: 65,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              popularDiets[index].name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.black,
-                                  fontSize: 16
-                              ),
-                            ),
-                            Text(
-                              popularDiets[index].level + ' | ' + popularDiets[index].duration + ' | ' + popularDiets[index].calorie,
-                              style: const TextStyle(
-                                  color: Color(0xff7B6F72),
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400
-                              ),
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: (){},
-                          child: SvgPicture.asset(
-                            'assets/icons/button.svg',
-                            width: 30,
-                            height: 30,
-                          ),
-                        )
-                      ],
-                    ),
                     decoration: BoxDecoration(
                         color: popularDiets[index].boxIsSelected ?
                         Colors.white : Colors.transparent,
@@ -110,6 +70,48 @@ class FoodPage extends StatelessWidget {
                               spreadRadius: 0
                           )
                         ] : []
+                    ),
+                    child: SingleChildScrollView(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SvgPicture.asset(
+                            popularDiets[index].iconPath,
+                            width: 85,
+                            height: 95,
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                popularDiets[index].name,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black,
+                                    fontSize: 16
+                                ),
+                              ),
+                              Text(
+                                popularDiets[index].level + ' | ' + popularDiets[index].duration + ' | ' + popularDiets[index].recommended,
+                                style: const TextStyle(
+                                    color: Color(0xff7B6F72),
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w400
+                                ),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: (){},
+                            child: SvgPicture.asset(
+                              'assets/icons/button.svg',
+                              width: 30,
+                              height: 30,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -151,7 +153,11 @@ class FoodPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SvgPicture.asset(diets[index].iconPath),
+                    SvgPicture.asset(diets[index].iconPath,
+                    height: 100,
+                    width: 100,
+                    //color: Color(0xffEEA4CE),
+                    ),
                     Column(
                       children: [
                         Text(
@@ -229,7 +235,7 @@ class FoodPage extends StatelessWidget {
         ),
         const SizedBox(height: 15,),
         Container(
-          height: 120,
+          height: 150,
           child: ListView.separated(
             itemCount: categories.length,
             scrollDirection: Axis.horizontal,
@@ -240,7 +246,7 @@ class FoodPage extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(width: 25,),
             itemBuilder: (context, index) {
               return Container(
-                width: 100,
+                width: 120,
                 decoration: BoxDecoration(
                     color: categories[index].boxColor.withOpacity(0.3),
                     borderRadius: BorderRadius.circular(16)
@@ -249,8 +255,8 @@ class FoodPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      width: 50,
-                      height: 50,
+                      width: 90,
+                      height: 90,
                       decoration: const BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle
@@ -336,7 +342,7 @@ class FoodPage extends StatelessWidget {
   AppBar appBar() {
     return AppBar(
       title: const Text(
-        'Breakfast',
+        'Hey, Stay Happy!',
         style: TextStyle(
             color: Colors.black,
             fontSize: 18,

@@ -24,8 +24,8 @@ class DietModel {
 
     diets.add(
       DietModel(
-       name: 'Honey Pancake',
-       iconPath: 'assets/icons/honey-pancakes.svg',
+       name: 'Healthy Eating',
+       iconPath: 'assets/icons/eating.svg',
        level: 'Easy',
        duration: '30mins',
        calorie: '180kCal',
@@ -36,12 +36,12 @@ class DietModel {
 
     diets.add(
       DietModel(
-       name: 'Canai Bread',
-       iconPath: 'assets/icons/canai-bread.svg',
+       name: 'Stay Hydrated',
+       iconPath: 'assets/icons/water.svg',
        level: 'Easy',
        duration: '20mins',
        calorie: '230kCal',
-       viewIsSelected: false,
+       viewIsSelected: true,
        boxColor: Color(0xffEEA4CE)
       )
     );

@@ -3,7 +3,7 @@ class PopularDietsModel {
   String iconPath;
   String level;
   String duration;
-  String calorie;
+  String recommended;
   bool boxIsSelected;
 
   PopularDietsModel({
@@ -11,7 +11,7 @@ class PopularDietsModel {
     required this.iconPath,
     required this.level,
     required this.duration,
-    required this.calorie,
+    required this.recommended,
     required this.boxIsSelected
   });
 
@@ -20,25 +20,48 @@ class PopularDietsModel {
 
     popularDiets.add(
       PopularDietsModel(
-       name: 'Blueberry Pancake',
-       iconPath: 'assets/icons/blueberry-pancake.svg',
-       level: 'Medium',
+       name: 'Reading Books',
+       iconPath: 'assets/icons/reading.svg',
+       level: 'Meduim',
        duration: '30mins',
-       calorie: '230kCal',
+        recommended: 'Highly',
        boxIsSelected: true,
       )
     );
 
     popularDiets.add(
       PopularDietsModel(
-       name: 'Salmon Nigiri',
-       iconPath: 'assets/icons/salmon-nigiri.svg',
+       name: 'Listening Music',
+       iconPath: 'assets/icons/music.svg',
        level: 'Easy',
        duration: '20mins',
-       calorie: '120kCal',
-       boxIsSelected: false,
+        recommended: 'Highly',
+       boxIsSelected: true,
       )
     );
+
+    popularDiets.add(
+        PopularDietsModel(
+          name: 'Journalling',
+          iconPath: 'assets/icons/journaling.svg',
+          level: 'Medium',
+          duration: '10mins',
+          recommended: 'Highly',
+          boxIsSelected: true,
+        )
+    );
+
+    popularDiets.add(
+        PopularDietsModel(
+          name: 'Meditation',
+          iconPath: 'assets/icons/meditation.svg',
+          level: 'Medium',
+          duration: '45mins',
+          recommended: 'Highly',
+          boxIsSelected: true,
+        )
+    );
+
 
     return popularDiets;
   }

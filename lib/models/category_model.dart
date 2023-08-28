@@ -16,32 +16,32 @@ class CategoryModel {
     
     categories.add(
       CategoryModel(
-        name: 'Salad',
-        iconPath: 'assets/icons/plate.svg',
+        name: 'Happy',
+        iconPath: 'assets/icons/happy.svg',
         boxColor: Color(0xff9DCEFF)
       )
     );
 
     categories.add(
       CategoryModel(
-        name: 'Cake',
-        iconPath: 'assets/icons/pancakes.svg',
+        name: 'Stressed',
+        iconPath: 'assets/icons/stressed.svg',
         boxColor: Color(0xffEEA4CE)
       )
     );
 
     categories.add(
       CategoryModel(
-        name: 'Pie',
-        iconPath: 'assets/icons/pie.svg',
+        name: 'Confused',
+        iconPath: 'assets/icons/confused.svg',
         boxColor: Color(0xff9DCEFF)
       )
     );
 
     categories.add(
       CategoryModel(
-        name: 'Smoothies',
-        iconPath: 'assets/icons/orange-snacks.svg',
+        name: 'Tired',
+        iconPath: 'assets/icons/tired.svg',
         boxColor: Color(0xffEEA4CE)
       )
     );
