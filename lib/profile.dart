@@ -101,7 +101,7 @@ class ProfilePage extends StatelessWidget {
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
-              description: "Check out your profile!",
+              description: "Ting ting!",
             ),
             SizedBox(
               height: 15,
@@ -113,7 +113,7 @@ class ProfilePage extends StatelessWidget {
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
-              description: "Check out your profile!",
+              description: "Customize for yourself",
             ),
             SizedBox(
               height: 15,
@@ -125,7 +125,7 @@ class ProfilePage extends StatelessWidget {
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
-              description: "Check out your profile!",
+              description: "Here to help!",
             ),
             SizedBox(
               height: 15,
@@ -137,7 +137,7 @@ class ProfilePage extends StatelessWidget {
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
-              description: "Check out your profile!",
+              description: "See you soon!",
             ),
             SizedBox(
               height: 15,
@@ -149,7 +149,7 @@ class ProfilePage extends StatelessWidget {
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
-              description: "Check out your profile!",
+              description: ":(",
             ),
             SizedBox(
               height: 15,
