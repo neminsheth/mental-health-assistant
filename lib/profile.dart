@@ -1,73 +1,164 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ipd/colors.dart';
+import 'package:ipd/general/customButton.dart';
+
+import 'general/styleCard.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile'),
-        backgroundColor: AppColors.primaryLight,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: NetworkImage(
-                  'https://example.com/your-avatar-image-url.jpg'),
-            ),
-            SizedBox(height: 20),
-            Container(
-              padding: EdgeInsets.all(20),
-              width: MediaQuery.of(context).size.width * 0.8,
-              decoration: BoxDecoration(
-                color: AppColors.primaryLight,
-                borderRadius: BorderRadius.circular(15),
-              ),
+        title: const Text(
+          'Your happy, Profile',
+          style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0.0,
+        centerTitle: true,
+        leading: GestureDetector(
+          onTap: () {
 
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  Text(
-                    'John Doe',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'john.doe@example.com',
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'About me: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra aliquam nisl ac tristique.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      // Navigate to edit profile page
-                    },
-                    child: Text('Edit Profile'),
-                  ),
-                ],
+          },
+          // child: Container(
+          //   margin: const EdgeInsets.all(10),
+          //   alignment: Alignment.center,
+          //   child: SvgPicture.asset(
+          //     'assets/icons/Arrow - Left 2.svg',
+          //     height: 20,
+          //     width: 20,
+          //   ),
+          //   decoration: BoxDecoration(
+          //       color: const Color(0xffF7F8F8),
+          //       borderRadius: BorderRadius.circular(10)
+          //   ),
+          // ),
+        ),
+        actions: [
+           GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                alignment: Alignment.center,
+                width: 37,
+                decoration: BoxDecoration(
+                    color: const Color(0xffF7F8F8),
+                    borderRadius: BorderRadius.circular(10)
+                ),
+                child: SvgPicture.asset(
+                  'assets/icons/dots.svg',
+                  height: 5,
+                  width: 5,
+                ),
               ),
             ),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Container(
+                height: 100,
+                child: const Center(
+                  child: CircleAvatar(
+                    backgroundColor: AppColors.secondary,
+                    radius: 50,
+                    child: Text(
+                      'Pictcha!',
+                      style: TextStyle(fontSize: 25, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+
+            StyleCard(
+              title: "Profile",
+              img: "assets/icons/profile.svg",
+              onTap: () {
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check out your profile!",
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            StyleCard(
+              title: "Notification",
+              img: "assets/icons/notfication.svg",
+              onTap: () {
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check out your profile!",
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StyleCard(
+              title: "Settings",
+              img: "assets/icons/settings.svg",
+              onTap: () {
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check out your profile!",
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StyleCard(
+              title: "Help Centre",
+              img: "assets/icons/question.svg",
+              onTap: () {
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check out your profile!",
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StyleCard(
+              title: "Log Out",
+              img: "assets/icons/logout.svg",
+              onTap: () {
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check out your profile!",
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            StyleCard(
+              title: "Delete Account",
+              img: "assets/icons/delete.svg",
+              onTap: () {
+              },
+              bgColor: AppColors.primary,
+              textColor: AppColors.white,
+              description: "Check out your profile!",
+            ),
+            SizedBox(
+              height: 15,
+            ),
+
           ],
         ),
-      ),
+
+      )
     );
   }
 }
