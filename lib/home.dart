@@ -45,12 +45,12 @@ class _HomePageState extends State<HomePage> {
             title: Text('Feed', style: TextStyle(color: AppColors.white)),
             ),
           FlashyTabBarItem(
-            icon: Icon(Icons.info, color: AppColors.white),
-            title: Text('Info', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.emoji_emotions, color: AppColors.white),
+            title: Text('AI name', style: TextStyle(color: AppColors.white)),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.chat, color: AppColors.white),
-            title: Text('Chat', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.groups, color: AppColors.white),
+            title: Text('Community', style: TextStyle(color: AppColors.white)),
           ),
           FlashyTabBarItem(
             icon: Icon(Icons.more_horiz, color: AppColors.white),
