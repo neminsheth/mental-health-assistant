@@ -2,8 +2,9 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:ipd/food.dart';
 import 'package:ipd/profile.dart';
+import 'package:ipd/questionnaire.dart';
 import 'colors.dart';
-import 'feed.dart';
+import 'more.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -15,46 +16,38 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     FoodPage(),
-    Page(),
-    Page(),
+    QuestionnairePage(),
+    MorePage(),
     ProfilePage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'AI Mental Health',
-          style: TextStyle(color: AppColors.primary),
-        ),
-        backgroundColor: AppColors.white,
-        elevation: 0,
-      ),
       body: _pages[_currentIndex],
       bottomNavigationBar: FlashyTabBar( // Use FlashyTabBar
         selectedIndex: _currentIndex,
-        showElevation: true,
+        showElevation: false,
         onItemSelected: (index) => setState(() {
           _currentIndex = index;
         }),
-        backgroundColor: AppColors.secondary, // Set background color
+        backgroundColor: AppColors.white, // Set background color
         items: [
           FlashyTabBarItem(
-            icon: Icon(Icons.home, color: AppColors.white),
-            title: Text('Feed', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.home, color: AppColors.secondaryblue),
+            title: Text('Feed', style: TextStyle(color: AppColors.secondaryblue)),
             ),
           FlashyTabBarItem(
-            icon: Icon(Icons.emoji_emotions, color: AppColors.white),
-            title: Text('AI name', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.emoji_emotions, color: AppColors.secondaryblue),
+            title: Text('BlissBot', style: TextStyle(color: AppColors.secondaryblue)),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.groups, color: AppColors.white),
-            title: Text('Community', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.book, color: AppColors.secondaryblue),
+            title: Text('Journalling', style: TextStyle(color: AppColors.secondaryblue)),
           ),
           FlashyTabBarItem(
-            icon: Icon(Icons.more_horiz, color: AppColors.white),
-            title: Text('More', style: TextStyle(color: AppColors.white)),
+            icon: Icon(Icons.person, color: AppColors.secondaryblue),
+            title: Text('Profile', style: TextStyle(color: AppColors.secondaryblue)),
           ),
         ],
       ),
