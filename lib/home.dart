@@ -4,6 +4,8 @@ import 'package:ipd/food.dart';
 import 'package:ipd/profile.dart';
 import 'package:ipd/questionnaire.dart';
 import 'colors.dart';
+import 'journal.dart';
+import 'journalling.dart';
 import 'more.dart';
 
 class HomePage extends StatefulWidget {
@@ -16,9 +18,8 @@ class _HomePageState extends State<HomePage> {
 
   final List<Widget> _pages = [
     MorePage(),
-    //FoodPage(),
     QuestionnairePage(),
-    Page(),
+    JournalPage(),
     ProfilePage(),
   ];
 
