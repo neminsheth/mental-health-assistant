@@ -47,7 +47,7 @@ class MorePage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: 30 * heightRatio,
+                vertical: 40 * heightRatio,
                 horizontal: 20 * widthRatio,
               ),
               child: Row(
@@ -57,14 +57,14 @@ class MorePage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
-                        width: 110 * widthRatio,
-                        height: 130 * heightRatio,
+                        width: 120 * widthRatio,
+                        height: 180 * heightRatio,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/icons/harmony.png'), // Replace with your image asset path
+                            image: AssetImage('assets/icons/meditation.png'), // Replace with your image asset path
                             fit: BoxFit.scaleDown, // You can adjust the fit as needed
                           ),
-                          color: AppColors.secondary,
+                          color: AppColors.white,
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
@@ -80,9 +80,9 @@ class MorePage extends StatelessWidget {
                         ),
                         child: Container(
                           width: 110 * widthRatio,
-                          height: 100 * heightRatio,
+                          height: 150 * heightRatio,
                           decoration: BoxDecoration(
-                            color: AppColors.secondary,
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(15),
                             image: DecorationImage(
                               image: AssetImage('assets/icons/mental-health.png'), // Replace with your image asset path
@@ -98,18 +98,18 @@ class MorePage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 20 * widthRatio,
+                          //left: 20 * widthRatio,
                           right: 5 * widthRatio,
                         ),
                         child: Container(
-                          width: 60 * widthRatio,
-                          height: 60 * heightRatio,
+                          width: 70 * widthRatio,
+                          height: 70 * heightRatio,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage('assets/icons/charity.png'), // Replace with your image asset path
                               fit: BoxFit.scaleDown, // You can adjust the fit as needed
                             ),
-                            color: AppColors.secondary,
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(15),
                             shape: BoxShape.rectangle,
                           ),
@@ -117,15 +117,19 @@ class MorePage extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 20 * widthRatio,
+                          //left: 0 * widthRatio,
                           right: 5 * widthRatio,
-                          top: 5 * heightRatio,
+                          top: 25 * heightRatio,
                         ),
                         child: Container(
-                          width: 60 * widthRatio,
-                          height: 60 * heightRatio,
+                          width: 70 * widthRatio,
+                          height: 70 * heightRatio,
                           decoration: BoxDecoration(
-                            color: AppColors.secondary,
+                            image: DecorationImage(
+                              image: AssetImage('assets/icons/brain_games.JPG'), // Replace with your image asset path
+                              fit: BoxFit.contain, // You can adjust the fit as needed
+                            ),
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(15),
                             shape: BoxShape.rectangle,
                           ),
@@ -137,40 +141,66 @@ class MorePage extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(top: 20 * heightRatio),
+              padding: EdgeInsets.only(top: 10 * heightRatio),
               child: Row(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
                       left: 20 * widthRatio,
-                      bottom: 20 * heightRatio,
+                      bottom: 30 * heightRatio,
                     ),
                     child: Container(
-                      width: 110 * widthRatio,
-                      height: 100 * heightRatio,
+                      width: 120 * widthRatio,
+                      height: 120 * heightRatio,
                       decoration: BoxDecoration(
-                        color: AppColors.secondary,
+                        image: DecorationImage(
+                          image: AssetImage('assets/icons/to-do-list.png'), // Replace with your image asset path
+                          fit: BoxFit.contain, // You can adjust the fit as needed
+                        ),
+                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      horizontal: 30 * widthRatio,
-                      vertical: 30 * heightRatio,
+                      horizontal: 10 * widthRatio,
+                      vertical: 10 * heightRatio,
                     ),
-                    child: Container(
-                      width: 110 * widthRatio,
-                      height: 150 * heightRatio,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/icons/notebook.png'), // Replace with your image asset path
-                          fit: BoxFit.scaleDown, // You can adjust the fit as needed
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            width: 110 * widthRatio,
+                            height: 150 * heightRatio,
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Image.asset(
+                              'assets/icons/notebook.png',
+                              width: 80 * widthRatio, // Adjust the width as needed
+                              height: 70 * heightRatio, // Adjust the height as needed
+                              fit: BoxFit.contain, // Use BoxFit.contain to fit the image within the container
+                            ),
+                          ),
                         ),
-                        color: AppColors.secondary,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
+                        // const Positioned(
+                        //   bottom: 2, // Adjust the spacing between the image and text
+                        //   child: Text(
+                        //     'Your Text Here',
+                        //     style: TextStyle(
+                        //       fontFamily: 'Poppins',
+                        //       fontSize: 14,
+                        //       fontWeight: FontWeight.bold,
+                        //       color: AppColors.secondary,
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
                     ),
                   ),
                   Column(
@@ -178,14 +208,18 @@ class MorePage extends StatelessWidget {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 5 * widthRatio,
+                          left: 4 * widthRatio,
                           top: 5 * heightRatio,
                         ),
                         child: Container(
-                          width: 60 * widthRatio,
-                          height: 60 * heightRatio,
+                          width: 70 * widthRatio,
+                          height: 70 * heightRatio,
                           decoration: BoxDecoration(
-                            color: AppColors.secondary,
+                            image: DecorationImage(
+                              image: AssetImage('assets/icons/podcast.JPG'), // Replace with your image asset path
+                              fit: BoxFit.contain, // You can adjust the fit as needed
+                            ),
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(15),
                             shape: BoxShape.rectangle,
                           ),
@@ -193,14 +227,18 @@ class MorePage extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.only(
-                          left: 5 * widthRatio,
-                          top: 5 * heightRatio,
+                          left: 4 * widthRatio,
+                          top: 25 * heightRatio,
                         ),
                         child: Container(
-                          width: 60 * widthRatio,
-                          height: 60 * heightRatio,
+                          width: 70 * widthRatio,
+                          height: 70 * heightRatio,
                           decoration: BoxDecoration(
-                            color: AppColors.secondary,
+                            image: DecorationImage(
+                              image: AssetImage('assets/icons/hand.JPG'), // Replace with your image asset path
+                              fit: BoxFit.contain, // You can adjust the fit as needed
+                            ),
+                            color: AppColors.white,
                             borderRadius: BorderRadius.circular(15),
                             shape: BoxShape.rectangle,
                           ),
@@ -223,7 +261,11 @@ class MorePage extends StatelessWidget {
                     width: 110 * widthRatio,
                     height: 130 * heightRatio,
                     decoration: BoxDecoration(
-                      color: AppColors.secondary,
+                      image: DecorationImage(
+                        image: AssetImage('assets/icons/reading.JPG'), // Replace with your image asset path
+                        fit: BoxFit.contain, // You can adjust the fit as needed
+                      ),
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
@@ -231,13 +273,17 @@ class MorePage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: 30 * widthRatio,
-                    vertical: 10 * heightRatio,
+                    vertical: 30 * heightRatio,
                   ),
                   child: Container(
                     width: 200 * widthRatio,
                     height: 150 * heightRatio,
                     decoration: BoxDecoration(
-                      color: AppColors.secondary,
+                      image: DecorationImage(
+                        image: AssetImage('assets/icons/yoga (1).png'), // Replace with your image asset path
+                        fit: BoxFit.contain, // You can adjust the fit as needed
+                      ),
+                      color: AppColors.white,
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
