@@ -53,7 +53,7 @@ class _JournallingPageState extends State<JournallingPage> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.secondaryblue),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(50),
       ),
       padding: EdgeInsets.all(16),
       child: Row(
@@ -96,7 +96,7 @@ class _JournallingPageState extends State<JournallingPage> {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: AppColors.secondaryblue),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(30),
       ),
       padding: EdgeInsets.all(16),
       child: Column(
@@ -113,10 +113,16 @@ class _JournallingPageState extends State<JournallingPage> {
           SizedBox(height: 10),
           TextField(
             controller: notesController,
-            maxLines: 5,
+            maxLines: 15,
             decoration: InputDecoration(
               hintText: 'Type your notes here...',
-              border: OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12.0), // Adjust the border radius
+                borderSide: const BorderSide(
+                  width: 10.0,  // Adjust the border size
+                ),
+              ),
+
             ),
           ),
         ],

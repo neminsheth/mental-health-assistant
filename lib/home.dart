@@ -6,7 +6,7 @@ import 'package:ipd/questionnaire.dart';
 import 'colors.dart';
 import 'journal.dart';
 import 'journalling.dart';
-import 'more.dart';
+import 'feed/feed.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    MorePage(),
+    FeedPage(),
     QuestionnairePage(),
     JournalPage(),
     ProfilePage(),
