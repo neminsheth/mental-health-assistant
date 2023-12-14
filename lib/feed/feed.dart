@@ -9,7 +9,7 @@ class FeedPage extends StatelessWidget {
 
     // Define the original design dimensions
     const double originalWidth = 390.0;
-    const double originalHeight = 844.0;
+    const double originalHeight = 900.0;
 
     // Calculate width and height ratios
     final double widthRatio = size.width / originalWidth;

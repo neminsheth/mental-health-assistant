@@ -24,12 +24,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: appBar(),
-      body: DefaultTextStyle(
-          style: const TextStyle(
-          fontFamily: 'Poppins-Medium',
-            color: Colors.black, // Set your default text color here
-          ),
-        child :Padding(
+      body: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +48,8 @@ class _ToDoListPageState extends State<ToDoListPage> {
           ],
         ),
         ),
-      ),
-    );
+      );
+
   }
 
   void _handleToDoChange(Map<String, dynamic> todo) {

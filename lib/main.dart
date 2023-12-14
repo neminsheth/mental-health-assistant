@@ -14,6 +14,11 @@ class MyApp extends StatelessWidget {
       title: 'AI Mental Health',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          bodyText2: TextStyle(
+            fontFamily: 'Poppins',
+          ),
+        ),
       ),
       home: HomePage(),
     );
