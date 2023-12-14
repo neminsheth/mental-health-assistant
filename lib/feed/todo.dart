@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ipd/colors.dart';
-import 'package:ipd/feed/todo_widget.dart';
-
 
 class ToDoListPage extends StatefulWidget {
-  ToDoListPage({Key? key}) : super(key: key);
-
   @override
-  State<ToDoListPage> createState() => _ToDoListPageState();
+  _ToDoListPageState createState() => _ToDoListPageState();
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
-  // For demonstration purposes, replace this list with your actual ToDo data
-  final List<Map<String, dynamic>> todosList = [
-    {'id': '1', 'todoText': 'Task 1', 'isDone': false},
-    {'id': '2', 'todoText': 'Task 2', 'isDone': true},
-    // Add more ToDo items as needed
-  ];
+  final List<Map<String, dynamic>> todosList = [];
 
   List<Map<String, dynamic>> _foundToDo = [];
   final _todoController = TextEditingController();
@@ -32,40 +23,37 @@ class _ToDoListPageState extends State<ToDoListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildSearchBox(),
-            SizedBox(height: 20),
-            Text(
-              'All ToDos',
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.w500,
-                color: Colors.white,
+      appBar: appBar(),
+      body: DefaultTextStyle(
+          style: const TextStyle(
+          fontFamily: 'Poppins-Medium',
+            color: Colors.black, // Set your default text color here
+          ),
+        child :Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildSearchBox(),
+              SizedBox(height: 20),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _foundToDo.length,
+                  itemBuilder: (context, index) {
+                    return ToDoItem(
+                      todo: _foundToDo[index],
+                      onToDoChanged: _handleToDoChange,
+                      onDeleteItem: _deleteToDoItem,
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _foundToDo.length,
-                itemBuilder: (context, index) {
-                  return ToDoItem(
-                    todo: _foundToDo[index],
-                    onToDoChanged: _handleToDoChange,
-                    onDeleteItem: _deleteToDoItem,
-                  );
-                },
-              ),
-            ),
+              SizedBox(height: 10),
+              _buildAddTaskInput(),
           ],
         ),
+        ),
       ),
-      floatingActionButton: _buildAddButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -117,33 +105,26 @@ class _ToDoListPageState extends State<ToDoListPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: TextField(
-        onChanged: (value) => _runFilter(value),
-        controller: _todoController,
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.all(15),
-          prefixIcon: Icon(
-            Icons.search,
-            color: AppColors.primary,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              onChanged: (value) => _runFilter(value),
+              controller: _todoController,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.all(15),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.black,
+                ),
+                border: InputBorder.none,
+                hintText: 'Search',
+                hintStyle: TextStyle(color: Colors.black),
+              ),
+            ),
           ),
-          border: InputBorder.none,
-          hintText: 'Search',
-          hintStyle: TextStyle(color: Colors.black),
-        ),
+        ],
       ),
-    );
-  }
-
-  Widget _buildAddButton() {
-    return FloatingActionButton(
-      onPressed: () {
-        _addToDoItem(_todoController.text);
-      },
-      child: Icon(
-        Icons.add,
-        size: 30,
-      ),
-      backgroundColor: AppColors.secondaryblue,
     );
   }
 
@@ -160,11 +141,6 @@ class _ToDoListPageState extends State<ToDoListPage> {
       backgroundColor: Colors.white,
       elevation: 0.0,
       centerTitle: true,
-      leading: GestureDetector(
-        onTap: () {
-
-        },
-      ),
       actions: [
         GestureDetector(
           onTap: () {},
@@ -184,6 +160,90 @@ class _ToDoListPageState extends State<ToDoListPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildAddTaskInput() {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _todoController,
+            cursorColor: AppColors.secondaryblue, // Set cursor color
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.all(15),
+              hintText: 'Add a new task',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(color: AppColors.secondaryblue),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(color: AppColors.secondaryblue),
+              ),
+            ),
+          ),
+        ),
+        IconButton(
+          onPressed: () {
+            _addToDoItem(_todoController.text);
+          },
+          icon: Icon(Icons.add, size: 30),
+          color: AppColors.secondaryblue,
+        ),
+      ],
+    );
+  }
+}
+
+class ToDoItem extends StatelessWidget {
+  final Map<String, dynamic> todo;
+  final Function(Map<String, dynamic>) onToDoChanged;
+  final Function(String) onDeleteItem;
+
+  ToDoItem({
+    required this.todo,
+    required this.onToDoChanged,
+    required this.onDeleteItem,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: AppColors.secondaryblue, // Choose your border color
+          width: 1.0, // Choose your border width
+        ),
+        borderRadius: BorderRadius.circular(25.0), // Choose your border radius
+      ),
+      margin: EdgeInsets.symmetric(vertical: 8.0),
+      child: ListTile(
+        title: Text(
+          todo['todoText'],
+          style: TextStyle(
+            decoration: todo['isDone'] ? TextDecoration.lineThrough : null,
+          ),
+        ),
+        leading: Transform.scale(
+          scale: 1.3,
+          child: Checkbox(
+            checkColor: Colors.white,
+            shape: CircleBorder(),
+            activeColor: AppColors.secondaryblue,
+            value: todo['isDone'],
+            onChanged: (value) {
+              onToDoChanged(todo);
+            },
+          ),
+        ),
+        trailing: IconButton(
+          icon: Icon(Icons.delete),
+          onPressed: () {
+            onDeleteItem(todo['id']);
+          },
+        ),
+      ),
     );
   }
 }
