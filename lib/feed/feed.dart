@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ipd/colors.dart';
+import 'package:ipd/feed/pomodoro.dart';
 import 'package:ipd/feed/todo.dart';
+
+import 'music.dart';
 
 class FeedPage extends StatelessWidget {
   @override
@@ -57,6 +60,7 @@ class FeedPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      //studymusic
                       InkWell(
                         onTap: () {
                           // Replace with your navigation logic for Meditation
@@ -81,7 +85,10 @@ class FeedPage extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          // Replace with your navigation logic for Mental Health
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => studymusic()), // Replace ToDoListPage with your actual page class
+                          );// Replace with your navigation logic for Mental Health
                         },
                         child: Padding(
                           padding: EdgeInsets.only(
@@ -132,6 +139,10 @@ class FeedPage extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => PomodoroTimer()), // Replace ToDoListPage with your actual page class
+                          );
                           // Replace with your navigation logic for Brain Games
                         },
                         child: Padding(

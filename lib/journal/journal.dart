@@ -1,28 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'colors.dart';
+import '../colors.dart';
 import 'journalling.dart';
 
 class JournalPage extends StatelessWidget {
+  final List<String>? entries;
+
+  JournalPage({this.entries});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Center(
-        child: Text('List of Journal Entries will appear here'),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'List of Journal Entries:',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: AppColors.secondaryblue,
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: entries?.length ?? 0,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(entries![index]), // Use ! to assert non-null (assuming you're sure it won't be null)
+                );
+              },
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => JournallingPage()),
-          );
+          // Navigate back to JournallingPage
+          Navigator.pop(context);
         },
-        backgroundColor: AppColors.secondaryblue, // Customize as needed
+        backgroundColor: AppColors.secondaryblue,
         child: Icon(Icons.add),
       ),
     );
   }
+
+
   AppBar appBar() {
     return AppBar(
       title: const Text(
@@ -63,3 +90,4 @@ class JournalPage extends StatelessWidget {
     );
   }
 }
+

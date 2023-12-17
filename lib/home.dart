@@ -4,8 +4,7 @@ import 'package:ipd/food.dart';
 import 'package:ipd/profile.dart';
 import 'package:ipd/questionnaire.dart';
 import 'colors.dart';
-import 'journal.dart';
-import 'journalling.dart';
+import 'journal/journal.dart';
 import 'feed/feed.dart';
 
 class HomePage extends StatefulWidget {

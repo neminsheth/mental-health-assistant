@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'colors.dart';
-import 'home.dart';
-import 'journal.dart'; // Import your AppColors class
+import '../colors.dart';
+import '../home.dart';
+import 'journal.dart';
 
 class JournallingPage extends StatefulWidget {
   @override
@@ -12,6 +12,7 @@ class JournallingPage extends StatefulWidget {
 class _JournallingPageState extends State<JournallingPage> {
   String selectedEmoji = '';
   TextEditingController notesController = TextEditingController();
+  List<String> journalEntries = [];
 
   @override
   Widget build(BuildContext context) {
@@ -29,25 +30,63 @@ class _JournallingPageState extends State<JournallingPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                  print('Selected Emoji: $selectedEmoji');
-                  print('Notes: ${notesController.text}');
+                  _saveJournalEntry();
                 },
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
                   primary: AppColors.secondaryblue,
                   onPrimary: Colors.white,
+                  side: BorderSide(color: AppColors.secondaryblue, width: 1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
-                child: Text('Done'),
+                child: Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Center(
+                    child: Text(
+                      'Done',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.secondaryblue,
+                      ),
+                    ),
+                  ),
+                ),
               ),
+              SizedBox(height: 20),
+              _buildJournalEntries(),
             ],
           ),
         ),
       ),
     );
   }
+
+  void _saveJournalEntry() {
+    if (selectedEmoji.isNotEmpty && notesController.text.isNotEmpty) {
+      String entry = '$selectedEmoji - ${notesController.text}';
+      setState(() {
+        journalEntries.add(entry);
+      });
+      // Clear the input fields
+      setState(() {
+        selectedEmoji = '';
+        notesController.clear();
+      });
+
+      // Navigate to JournalPage with updated entries
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => JournalPage(entries: List.from(journalEntries))),
+      );
+    }
+  }
+
+
+
 
   Widget _buildEmojiContainer() {
     return Container(
@@ -102,8 +141,8 @@ class _JournallingPageState extends State<JournallingPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'How do you feel today?',
+          const Text(
+            'How do you feel today ?',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -116,19 +155,41 @@ class _JournallingPageState extends State<JournallingPage> {
             maxLines: 15,
             decoration: InputDecoration(
               hintText: 'Type your notes here...',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.0), // Adjust the border radius
-                borderSide: const BorderSide(
-                  width: 10.0,  // Adjust the border size
-                ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide(color: AppColors.secondaryblue),
               ),
-
             ),
           ),
         ],
       ),
     );
   }
+
+  Widget _buildJournalEntries() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Journal Entries:',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: AppColors.secondaryblue,
+          ),
+        ),
+        SizedBox(height: 10),
+        if (journalEntries.isEmpty)
+          Text('No entries yet.')
+        else
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: journalEntries.map((entry) => Text(entry)).toList(),
+          ),
+      ],
+    );
+  }
+
   AppBar appBar() {
     return AppBar(
       title: const Text(
