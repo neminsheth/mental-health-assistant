@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ipd/colors.dart';
 import 'package:ipd/feed/pomodoro.dart';
+import 'package:ipd/feed/quotes.dart';
 import 'package:ipd/feed/todo.dart';
 
 import 'music.dart';
@@ -265,7 +266,10 @@ class FeedPage extends StatelessWidget {
                           ),
                         ),
                         InkWell(
-                          onTap: () {
+                          onTap: () { Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => QuotePage()), // Replace ToDoListPage with your actual page class
+                          );
                             // Replace with your navigation logic for Self Help
                           },
                           child: Padding(

@@ -40,6 +40,7 @@ dependencies:
   video_thumbnail_imageview: ^0.0.5
   youtube_player_flutter: ^8.1.2
   flutter_svg: ^2.0.5
+  http: ^0.13.3
 
 dev_dependencies:
   flutter_test:
