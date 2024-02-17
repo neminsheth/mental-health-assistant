@@ -3,7 +3,7 @@ import 'package:ipd/colors.dart';
 import 'package:ipd/feed/pomodoro.dart';
 import 'package:ipd/feed/quotes.dart';
 import 'package:ipd/feed/todo.dart';
-
+import 'meditate.dart';
 import 'music.dart';
 
 class FeedPage extends StatelessWidget {
@@ -64,7 +64,10 @@ class FeedPage extends StatelessWidget {
                       //studymusic
                       InkWell(
                         onTap: () {
-                          // Replace with your navigation logic for Meditation
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MeditateScreen()), // Replace ToDoListPage with your actual page class
+                          );// Re
                         },
                         child: Container(
                           width: 120 * widthRatio,

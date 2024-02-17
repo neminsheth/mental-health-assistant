@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'home.dart';
+import 'package:ipd/home.dart'; // Make sure to import HomePage from home.dart
 
 void main() {
   runApp(MyApp());
@@ -20,8 +19,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomePage(),
+      home: HomePage(), // Ensure HomePage is used as the home widget
     );
   }
 }
-

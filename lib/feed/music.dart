@@ -63,8 +63,9 @@ class studymusic extends StatelessWidget {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          //Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
-        },
+        //   Navigator.push(
+        //       context, MaterialPageRoute(builder: (context) => HomePage()));
+         },
         child: Container(
           margin: const EdgeInsets.all(10),
           alignment: Alignment.center,
@@ -81,7 +82,7 @@ class studymusic extends StatelessWidget {
         ),
       ),
       title: const Text(
-        'Studying and Relaxing Music',
+        'Get Relaxed : )',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
