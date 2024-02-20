@@ -8,6 +8,9 @@ import 'package:ipd/feed/sleep/src/controller.dart';
 import 'package:ipd/feed/sleep/src/typedata.dart';
 import 'package:ipd/feed/sleep/today_sleep_schedule_row.dart';
 import 'package:simple_animation_progress_bar/simple_animation_progress_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 
 import 'colo_extension.dart';
 
@@ -151,7 +154,9 @@ class _SleepScheduleViewState extends State<SleepScheduleView> {
                                 child: RoundButton(
                                     title: "Learn More",
                                     fontSize: 12,
-                                    onPressed: () {}),
+                                    onPressed: () {
+                                      _launchURL("https://www.helpguide.org/articles/sleep/sleep-needs-get-the-sleep-you-need.htm");
+                                    }),
                               )
                             ]),
                         Image.asset(
@@ -332,5 +337,12 @@ class _SleepScheduleViewState extends State<SleepScheduleView> {
         ),
       ),
     );
+  }
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

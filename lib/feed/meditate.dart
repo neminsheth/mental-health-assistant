@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ipd/feed/feed.dart';
 
 import '../colors.dart';
 import '../general/music_tile.dart';
@@ -16,6 +15,8 @@ class MeditateScreen extends StatefulWidget {
 
 class _MeditateScreenState extends State<MeditateScreen> {
   late CountDownController _controller;
+  int _selectedDurationIndex = 0; // Index of the selected duration
+  final List<int> _timerDurations = [600, 900, 1800, 2700]; // Timer durations in seconds
 
   @override
   void initState() {
@@ -45,7 +46,8 @@ class _MeditateScreenState extends State<MeditateScreen> {
               ),
               SizedBox(height: 20),
               CircularCountDownTimer(
-                duration: 2700,
+                key: UniqueKey(), // Ensure widget rebuilds when timer duration changes
+                duration: _timerDurations[_selectedDurationIndex],
                 initialDuration: 0,
                 controller: _controller,
                 width: MediaQuery.of(context).size.width / 2,
@@ -91,7 +93,7 @@ class _MeditateScreenState extends State<MeditateScreen> {
                   ),
                   IconButton(
                     onPressed: () {
-                      _controller.restart(duration: 2700);
+                      _controller.restart(duration: _timerDurations[_selectedDurationIndex]);
                     },
                     icon: Icon(Icons.replay),
                     color: Colors.white,
@@ -111,12 +113,12 @@ class _MeditateScreenState extends State<MeditateScreen> {
       ),
     );
   }
+
   AppBar appBar() {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         },
         child: Container(
           margin: const EdgeInsets.all(10),
@@ -134,7 +136,7 @@ class _MeditateScreenState extends State<MeditateScreen> {
         ),
       ),
       title: const Text(
-        'Pomodoro!',
+        'Reflect!',
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
@@ -145,24 +147,43 @@ class _MeditateScreenState extends State<MeditateScreen> {
       elevation: 0.0,
       centerTitle: true,
       actions: [
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            margin: const EdgeInsets.all(10),
-            alignment: Alignment.center,
-            width: 37,
-            child: SvgPicture.asset(
-              'assets/icons/dots.svg',
-              height: 5,
-              width: 5,
-            ),
-            decoration: BoxDecoration(
-              color: const Color(0xffF7F8F8),
-              borderRadius: BorderRadius.circular(10),
-            ),
+        IconButton(
+          onPressed: () {
+            _showTimerOptions(context);
+          },
+          icon: SvgPicture.asset(
+            'assets/icons/dots.svg',
+            height: 5,
+            width: 5,
           ),
         ),
       ],
+    );
+  }
+
+  void _showTimerOptions(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Timer Duration'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: _timerDurations.map((duration) {
+              int minutes = duration ~/ 60;
+              return ListTile(
+                title: Text('$minutes mins'),
+                onTap: () {
+                  setState(() {
+                    _selectedDurationIndex = _timerDurations.indexOf(duration);
+                  });
+                  Navigator.pop(context);
+                },
+              );
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 }
