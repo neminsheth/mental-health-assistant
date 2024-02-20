@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ipd/colors.dart';
 import 'package:ipd/feed/pomodoro.dart';
 import 'package:ipd/feed/quotes.dart';
+import 'package:ipd/feed/sleep/sleep_tracker_view.dart';
 import 'package:ipd/feed/todo.dart';
 import 'meditate.dart';
 import 'music.dart';
@@ -246,6 +247,10 @@ class FeedPage extends StatelessWidget {
                       children: [
                         InkWell(
                           onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SleepTrackerView()), // Replace ToDoListPage with your actual page class
+                            );
                             // Replace with your navigation logic for Podcast
                           },
                           child: Padding(
