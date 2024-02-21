@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ipd/colors.dart';
+import 'package:ipd/feed/books/book_screen.dart';
 import 'package:ipd/feed/pomodoro.dart';
 import 'package:ipd/feed/quotes.dart';
 import 'package:ipd/feed/sleep/sleep_tracker_view.dart';
@@ -311,8 +312,11 @@ class FeedPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 InkWell(
-                  onTap: () {
-                    // Replace with your navigation logic for Reading
+                  onTap: () { Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => bookScreen()), // Replace ToDoListPage with your actual page class
+                  );
+                    // Replace with your navigation logic for Self Help
                   },
                   child: Padding(
                     padding: EdgeInsets.only(
