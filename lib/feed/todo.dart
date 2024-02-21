@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ipd/colors.dart';
 
+import '../home.dart';
+
 class ToDoListPage extends StatefulWidget {
   @override
   _ToDoListPageState createState() => _ToDoListPageState();
@@ -138,7 +140,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
       centerTitle: true,
       actions: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          },
           child: Container(
             margin: const EdgeInsets.all(10),
             alignment: Alignment.center,

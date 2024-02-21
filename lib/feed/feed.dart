@@ -4,6 +4,7 @@ import 'package:ipd/feed/pomodoro.dart';
 import 'package:ipd/feed/quotes.dart';
 import 'package:ipd/feed/sleep/sleep_tracker_view.dart';
 import 'package:ipd/feed/todo.dart';
+import 'exercise/workout_tracker_view.dart';
 import 'meditate.dart';
 import 'music.dart';
 
@@ -334,6 +335,10 @@ class FeedPage extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WorkoutTrackerView()), // Replace ToDoListPage with your actual page class
+                  );
                     // Replace with your navigation logic for Yoga
                   },
                   child: Padding(
