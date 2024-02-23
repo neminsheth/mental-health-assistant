@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
+import 'package:circular_countdown_timer/countdown_text_format.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:audioplayers/audioplayers.dart';
 import '../colors.dart';
 import '../general/music_tile.dart';
 import '../home.dart';
@@ -17,6 +18,7 @@ class _MeditateScreenState extends State<MeditateScreen> {
   late CountDownController _controller;
   int _selectedDurationIndex = 0; // Index of the selected duration
   final List<int> _timerDurations = [600, 900, 1800, 2700]; // Timer durations in seconds
+  AudioPlayer audioPlayer = AudioPlayer(); // Initialize AudioPlayer instance
 
   @override
   void initState() {
@@ -86,6 +88,7 @@ class _MeditateScreenState extends State<MeditateScreen> {
                   IconButton(
                     onPressed: () {
                       _controller.start();
+                      //_playAudio(); // Play audio when meditation starts
                     },
                     icon: Icon(Icons.play_arrow),
                     color: Colors.white,
@@ -186,4 +189,10 @@ class _MeditateScreenState extends State<MeditateScreen> {
       },
     );
   }
+
+  // Function to play audio
+  // void _playAudio() {
+  //   audioPlayer.play(Uri.file('assets/audio/rainfall.mp3').toString(), isLocal: true);
+  // }
+
 }

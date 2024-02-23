@@ -51,6 +51,7 @@ dependencies:
   scrollable_positioned_list: ^0.3.8
   readmore: ^2.2.0
   dotted_dashed_line: ^0.0.3
+  shared_preferences: ^2.2.2
 
 
 dev_dependencies:

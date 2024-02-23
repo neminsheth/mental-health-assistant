@@ -24,351 +24,215 @@ class FeedPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Color(0xFF7591B5),
-      body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SizedBox(height: 30 * heightRatio),
-            Opacity(
-              opacity: 0.5,
-              child: Text(
-                'IPD Project',
-                style: TextStyle(
-                  fontFamily: 'Poppins',
-                  fontSize: 25 * widthRatio,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Text(
-                  'YOUR MENTAL HEALTH PARTNER',
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(height: 30 * heightRatio),
+              Opacity(
+                opacity: 0.5,
+                child: Text(
+                  'IPD Project',
                   style: TextStyle(
-                    fontSize: 16 * widthRatio,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 25 * widthRatio,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 40 * heightRatio,
-                horizontal: 20 * widthRatio,
               ),
-              child: Row(
+              Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      //studymusic
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MeditateScreen()), // Replace ToDoListPage with your actual page class
-                          );// Re
-                        },
-                        child: Container(
-                          width: 120 * widthRatio,
-                          height: 180 * heightRatio,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/icons/meditation.png'),
-                              fit: BoxFit.scaleDown,
-                            ),
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => studymusic()), // Replace ToDoListPage with your actual page class
-                          );// Replace with your navigation logic for Mental Health
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 20 * widthRatio,
-                            right: 20 * widthRatio,
-                          ),
-                          child: Container(
-                            width: 110 * widthRatio,
-                            height: 150 * heightRatio,
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage('assets/icons/mental-health.png'),
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          // Replace with your navigation logic for Charity
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: 5 * widthRatio,
-                          ),
-                          child: Container(
-                            width: 70 * widthRatio,
-                            height: 70 * heightRatio,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/icons/charity.png'),
-                                fit: BoxFit.scaleDown,
-                              ),
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              shape: BoxShape.rectangle,
-                            ),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PomodoroTimer()), // Replace ToDoListPage with your actual page class
-                          );
-                          // Replace with your navigation logic for Brain Games
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            right: 5 * widthRatio,
-                            top: 25 * heightRatio,
-                          ),
-                          child: Container(
-                            width: 70 * widthRatio,
-                            height: 70 * heightRatio,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/icons/brain_games.JPG'),
-                                fit: BoxFit.contain,
-                              ),
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(15),
-                              shape: BoxShape.rectangle,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    'YOUR MENTAL HEALTH PARTNER',
+                    style: TextStyle(
+                      fontSize: 16 * widthRatio,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
-            ),
-            Container(
-              child: Padding(
-                padding: EdgeInsets.only(top: 10 * heightRatio),
-                child: Row(
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 120 * heightRatio,
+                  horizontal: 20 * widthRatio,
+                ),
+                child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => ToDoListPage()), // Replace ToDoListPage with your actual page class
-                        );
-                      },
-                      child: Container(
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            left: 20 * widthRatio,
-                            bottom: 30 * heightRatio,
-                          ),
-                          child: Container(
-                            width: 120 * widthRatio,
-                            height: 120 * heightRatio,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: AssetImage('assets/icons/to-do-list.png'),
-                                fit: BoxFit.contain,
-                              ),
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        // Replace with your navigation logic for Journal
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 10 * widthRatio,
-                          vertical: 10 * heightRatio,
-                        ),
-                        child: Stack(
-                          alignment: Alignment.bottomCenter,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 110 * widthRatio,
-                                height: 150 * heightRatio,
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                child: Image.asset(
-                                  'assets/icons/notebook.png',
-                                  width: 80 * widthRatio,
-                                  height: 70 * heightRatio,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        InkWell(
-                          onTap: () {
+                        _buildActivityIcon(
+                          'Meditation',
+                          'assets/icons/meditation.png',
+                              () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SleepTrackerView()), // Replace ToDoListPage with your actual page class
+                              MaterialPageRoute(builder: (context) => MeditateScreen()),
                             );
-                            // Replace with your navigation logic for Podcast
                           },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 4 * widthRatio,
-                              top: 5 * heightRatio,
-                            ),
-                            child: Container(
-                              width: 70 * widthRatio,
-                              height: 70 * heightRatio,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/icons/podcast.JPG'),
-                                  fit: BoxFit.contain,
-                                ),
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
-                              ),
-                            ),
-                          ),
+                          widthRatio,
+                          heightRatio,
                         ),
-                        InkWell(
-                          onTap: () { Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => QuotePage()), // Replace ToDoListPage with your actual page class
-                          );
-                            // Replace with your navigation logic for Self Help
+                        _buildActivityIcon(
+                          'Mental Health',
+                          'assets/icons/mental-health.png',
+                              () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => studymusic()),
+                            );
                           },
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              left: 4 * widthRatio,
-                              top: 25 * heightRatio,
-                            ),
-                            child: Container(
-                              width: 70 * widthRatio,
-                              height: 70 * heightRatio,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/icons/hand.JPG'),
-                                  fit: BoxFit.contain,
-                                ),
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(15),
-                                shape: BoxShape.rectangle,
-                              ),
-                            ),
-                          ),
+                          widthRatio,
+                          heightRatio,
+                        ),
+                        _buildActivityIcon(
+                          'Brain Games',
+                          'assets/icons/brain_games.JPG',
+                              () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => PomodoroTimer()),
+                            );
+                          },
+                          widthRatio,
+                          heightRatio,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20 * heightRatio),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildActivityIcon(
+                          'To-Do List',
+                          'assets/icons/to-do-list.png',
+                              () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ToDoListPage()),
+                            );
+                          },
+                          widthRatio,
+                          heightRatio,
+                        ),
+                        _buildActivityIcon(
+                          'Journal',
+                          'assets/icons/notebook.png',
+                              () {
+                            // Navigate to journal page
+                          },
+                          widthRatio,
+                          heightRatio,
+                        ),
+                        _buildActivityIcon(
+                          'Podcast',
+                          'assets/icons/podcast.JPG',
+                              () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => SleepTrackerView()),
+                            );
+                          },
+                          widthRatio,
+                          heightRatio,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20 * heightRatio),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildActivityIcon(
+                          'Self Help',
+                          'assets/icons/hand.JPG',
+                              () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => QuotePage()),
+                                );
+                            // Navigate to self-help page
+                          },
+                          widthRatio,
+                          heightRatio,
+                        ),
+                        _buildActivityIcon(
+                          'Reading',
+                          'assets/icons/reading.JPG',
+                              () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => bookScreen()),
+                            );
+                          },
+                          widthRatio,
+                          heightRatio,
+                        ),
+                        _buildActivityIcon(
+                          'Yoga',
+                          'assets/icons/yoga (1).png',
+                              () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => WorkoutTrackerView()),
+                            );
+                          },
+                          widthRatio,
+                          heightRatio,
                         ),
                       ],
                     ),
                   ],
                 ),
               ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                InkWell(
-                  onTap: () { Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => bookScreen()), // Replace ToDoListPage with your actual page class
-                  );
-                    // Replace with your navigation logic for Self Help
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: 20 * widthRatio,
-                      bottom: 20 * heightRatio,
-                    ),
-                    child: Container(
-                      width: 110 * widthRatio,
-                      height: 130 * heightRatio,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/icons/reading.JPG'),
-                          fit: BoxFit.contain,
-                        ),
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => WorkoutTrackerView()), // Replace ToDoListPage with your actual page class
-                  );
-                    // Replace with your navigation logic for Yoga
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30 * widthRatio,
-                      vertical: 30 * heightRatio,
-                    ),
-                    child: Container(
-                      width: 200 * widthRatio,
-                      height: 150 * heightRatio,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/icons/yoga (1).png'),
-                          fit: BoxFit.contain,
-                        ),
-                        color: AppColors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
+
+  Widget _buildActivityIcon(String title, String imagePath, Function() onTap, double widthRatio, double heightRatio) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.all(5.0), // Add padding here
+        child: Container(
+          width: 105 * widthRatio,
+          height: 140 * heightRatio, // Adjusted height to accommodate the text
+          decoration: BoxDecoration(
+            color: AppColors.white,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 10),
+              Expanded(
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(height: 5), // Adjust the spacing between the image and text
+              Text(
+                title,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontFamily: 'Poppins',
+                  fontSize: 12, // Adjust the font size as needed
+                  fontWeight: FontWeight.bold,
+
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
 }

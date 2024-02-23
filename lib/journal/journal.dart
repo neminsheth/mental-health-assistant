@@ -3,10 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import '../colors.dart';
 import 'journalling.dart';
 
-class JournalPage extends StatelessWidget {
-  final List<String>? entries;
+class JournalPage extends StatefulWidget {
+  @override
+  _JournalPageState createState() => _JournalPageState();
+}
 
-  JournalPage({this.entries});
+class _JournalPageState extends State<JournalPage> {
+  List<String> journalEntries = [];
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +31,32 @@ class JournalPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: entries?.length ?? 0,
+              itemCount: journalEntries.length,
               itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(entries![index]), // Use ! to assert non-null (assuming you're sure it won't be null)
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColors.secondaryblue),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          _getEmoji(journalEntries[index]), // Display emoji
+                          style: TextStyle(fontSize: 20), // Font size for emoji
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: Text(
+                            _getNoteText(journalEntries[index]), // Display note text
+                            style: TextStyle(fontFamily: 'Poppins'), // Set font to Poppins
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 );
               },
             ),
@@ -39,9 +64,16 @@ class JournalPage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Navigate back to JournallingPage
-          Navigator.pop(context);
+        onPressed: () async {
+          final updatedEntries = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => JournallingPage()),
+          );
+          if (updatedEntries != null) {
+            setState(() {
+              journalEntries = List.from(updatedEntries);
+            });
+          }
         },
         backgroundColor: AppColors.secondaryblue,
         child: Icon(Icons.add),
@@ -49,24 +81,47 @@ class JournalPage extends StatelessWidget {
     );
   }
 
+  String _getEmoji(String entry) {
+    // Extracts the emoji from the entry
+    List<String> parts = entry.split(' - ');
+    // Replace text representation with emoji
+    switch (parts[0]) {
+      case 'sad':
+        return '😢';
+      case 'neutral':
+        return '😐';
+      case 'happy':
+        return '😊';
+      case 'very happy':
+        return '😄';
+      case 'excited':
+        return '😃';
+      default:
+        return '';
+    }
+  }
+
+  String _getNoteText(String entry) {
+    // Extracts the note text from the entry
+    List<String> parts = entry.split(' - ');
+    return parts[1];
+  }
 
   AppBar appBar() {
     return AppBar(
       title: const Text(
         'Journal',
         style: TextStyle(
-            color: AppColors.secondaryblue,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
+          color: AppColors.secondaryblue,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: Colors.white,
       elevation: 0.0,
       centerTitle: true,
       leading: GestureDetector(
-        onTap: () {
-
-        },
+        onTap: () {},
       ),
       actions: [
         GestureDetector(
@@ -81,8 +136,8 @@ class JournalPage extends StatelessWidget {
               width: 5,
             ),
             decoration: BoxDecoration(
-                color: const Color(0xffF7F8F8),
-                borderRadius: BorderRadius.circular(10)
+              color: const Color(0xffF7F8F8),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
@@ -90,4 +145,3 @@ class JournalPage extends StatelessWidget {
     );
   }
 }
-

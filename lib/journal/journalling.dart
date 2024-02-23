@@ -77,15 +77,10 @@ class _JournallingPageState extends State<JournallingPage> {
         notesController.clear();
       });
 
-      // Navigate to JournalPage with updated entries
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => JournalPage(entries: List.from(journalEntries))),
-      );
+      // Navigate back to the previous screen (JournalPage)
+      Navigator.pop(context, List.from(journalEntries));
     }
   }
-
-
 
 
   Widget _buildEmojiContainer() {
