@@ -23,172 +23,179 @@ class FeedPage extends StatelessWidget {
     final double heightRatio = size.height / originalHeight;
 
     return Scaffold(
-      backgroundColor: Color(0xFF7591B5),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(height: 30 * heightRatio),
-              Opacity(
-                opacity: 0.5,
-                child: Text(
-                  'IPD Project',
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 25 * widthRatio,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    'YOUR MENTAL HEALTH PARTNER',
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background_feed.jpeg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(height: 30 * heightRatio),
+                Opacity(
+                  opacity: 0.5,
+                  child: Text(
+                    'IPD Project',
                     style: TextStyle(
-                      fontSize: 16 * widthRatio,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontSize: 25 * widthRatio,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 120 * heightRatio,
-                  horizontal: 20 * widthRatio,
                 ),
-                child: Column(
+                Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildActivityIcon(
-                          'Meditation',
-                          'assets/icons/meditation.png',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => MeditateScreen()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                        _buildActivityIcon(
-                          'Mental Health',
-                          'assets/icons/mental-health.png',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => studymusic()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                        _buildActivityIcon(
-                          'Brain Games',
-                          'assets/icons/brain_games.JPG',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => PomodoroTimer()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20 * heightRatio),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildActivityIcon(
-                          'To-Do List',
-                          'assets/icons/to-do-list.png',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ToDoListPage()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                        _buildActivityIcon(
-                          'Journal',
-                          'assets/icons/notebook.png',
-                              () {
-                            // Navigate to journal page
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                        _buildActivityIcon(
-                          'Podcast',
-                          'assets/icons/podcast.JPG',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => SleepTrackerView()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 20 * heightRatio),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        _buildActivityIcon(
-                          'Self Help',
-                          'assets/icons/hand.JPG',
-                              () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => QuotePage()),
-                                );
-                            // Navigate to self-help page
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                        _buildActivityIcon(
-                          'Reading',
-                          'assets/icons/reading.JPG',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => bookScreen()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                        _buildActivityIcon(
-                          'Yoga',
-                          'assets/icons/yoga (1).png',
-                              () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => WorkoutTrackerView()),
-                            );
-                          },
-                          widthRatio,
-                          heightRatio,
-                        ),
-                      ],
+                    Text(
+                      'YOUR MENTAL HEALTH PARTNER',
+                      style: TextStyle(
+                        fontSize: 16 * widthRatio,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 120 * heightRatio,
+                    horizontal: 20 * widthRatio,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildActivityIcon(
+                            'Meditation',
+                            'assets/images/meditate_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => MeditateScreen()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                          _buildActivityIcon(
+                            'Music & Relax',
+                            'assets/images/music_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => studymusic()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                          _buildActivityIcon(
+                            'Focus',
+                            'assets/images/focus_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => PomodoroTimer()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20 * heightRatio),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildActivityIcon(
+                            'To-Do List',
+                            'assets/images/to-do list_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => ToDoListPage()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                          _buildActivityIcon(
+                            'Podcast',
+                            'assets/images/podcast_outlineimg.png',
+                                () {
+                              // Navigate to journal page
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                          _buildActivityIcon(
+                            'Sleep tracking',
+                            'assets/images/sleep track_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => SleepTrackerView()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20 * heightRatio),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildActivityIcon(
+                            'Self Help',
+                            'assets/images/self help_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => QuotePage()),
+                              );
+                              // Navigate to self-help page
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                          _buildActivityIcon(
+                            'Reading',
+                            'assets/images/reading_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => bookScreen()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                          _buildActivityIcon(
+                            'Yoga',
+                            'assets/images/exercise_outlineimg.png',
+                                () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => WorkoutTrackerView()),
+                              );
+                            },
+                            widthRatio,
+                            heightRatio,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -204,8 +211,9 @@ class FeedPage extends StatelessWidget {
           width: 105 * widthRatio,
           height: 140 * heightRatio, // Adjusted height to accommodate the text
           decoration: BoxDecoration(
-            color: AppColors.white,
+            color: Colors.white.withOpacity(0.5),
             borderRadius: BorderRadius.circular(15),
+            //backdropFilter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), // Apply blur effect
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -225,7 +233,6 @@ class FeedPage extends StatelessWidget {
                   fontFamily: 'Poppins',
                   fontSize: 12, // Adjust the font size as needed
                   fontWeight: FontWeight.bold,
-
                 ),
               ),
             ],
@@ -234,5 +241,4 @@ class FeedPage extends StatelessWidget {
       ),
     );
   }
-
 }
