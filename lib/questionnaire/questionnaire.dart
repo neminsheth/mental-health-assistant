@@ -81,9 +81,11 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
                     ]),
                   ),
                   _buildQuestionWithSlider('How able do you feel to handle stress when you are experiencing it?'),
-                  _buildMultiChoiceQuestion('What are the most pressing stress factors in your current academic context (related to this program of study)?', [
-                    'Study workload', 'Grades', 'Financial pressure (e.g. tuition, living costs)', 'Work (and Study) - Life balance', 'Relationship with (some) faculty members', 'Relationship with other students', 'Campus social life', 'Other',
-                  ]),
+                  SingleChildScrollView(
+                    child: _buildMultiChoiceQuestion('What are the most pressing stress factors in your current academic context (related to this program of study)?', [
+                      'Study workload', 'Grades', 'Financial pressure (e.g. tuition, living costs)', 'Work (and Study) - Life balance', 'Relationship with (some) faculty members', 'Relationship with other students', 'Campus social life', 'Other',
+                    ]),
+                  ),
                 ],
               ),
             ),
