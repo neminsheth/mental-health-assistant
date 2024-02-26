@@ -226,15 +226,69 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   }
 
   void _submitAnswers() {
-    double stressLevel = conductQuestionnaire(_answers); // Pass user answers to calculate stress level
-    print('Stress level: $stressLevel'); // Print the stress level
+    // Show loading screen
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent dismissing dialog with tap
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(), // Show circular progress indicator
+        );
+      },
+    );
+
+    // Delay for 3 seconds
+    Future.delayed(Duration(seconds: 3), () {
+      // After 3 seconds, calculate stress level
+      double stressLevelValue = conductQuestionnaire(_answers);
+      int stressLevel = stressLevelValue.round();
+      print("Stress Level: $stressLevelValue");
+
+      String imagePath; // Variable to hold the image asset path
+
+      switch (stressLevel) {
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+          imagePath = 'assets/images/image_one.png';
+          break;
+        case 6:
+          imagePath = 'assets/images/image_two.png';
+          break;
+        case 7:
+          imagePath = 'assets/images/image_three.png';
+          break;
+        case 8:
+          imagePath = 'assets/images/image_four.png';
+          break;
+        case 9:
+          imagePath = 'assets/images/image_five.png';
+          break;
+        default:
+          imagePath = 'assets/images/image_one.png';
+      }
+
+      // Dismiss loading screen dialog
+      Navigator.pop(context);
+
+      // Show image based on stress level
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ImageScreen(imagePath: imagePath),
+        ),
+      );
+      print(stressLevelValue);
+    });
   }
 
   AppBar appBar() {
     return AppBar(
       title: const Text(
         'Bliss Bot',
-        style: TextStyle(color: AppColors.secondaryblue, fontSize: 18, fontWeight: FontWeight.bold),
+        style: TextStyle(color: AppColors.secondaryblue, fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'Poppins'),
       ),
       backgroundColor: Colors.white,
       elevation: 0.0,
@@ -253,11 +307,36 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
               'assets/icons/dots.svg',
               height: 5,
               width: 5,
+              color: Colors.black,
             ),
             decoration: BoxDecoration(color: const Color(0xffF7F8F8), borderRadius: BorderRadius.circular(10)),
           ),
         ),
       ],
+    );
+  }
+}
+
+class ImageScreen extends StatelessWidget {
+  final String imagePath;
+
+  const ImageScreen({required this.imagePath});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Bliss :)',
+          style: TextStyle(color: Colors.black), // Set text color to black
+        ),
+        backgroundColor: AppColors.white,
+        elevation: 0.0,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Image.asset(imagePath), // Display image
+      ),
     );
   }
 }

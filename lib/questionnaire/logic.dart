@@ -1,26 +1,35 @@
 import 'dart:io';
 
 double stressLevel(Map<int, String> questions, Map<int, List<String>> options, Map<int, int> weights, List<List<String>> answers) {
-  double stressLevel = 0;
+  double totalStressLevel = 0;
+  double totalWeight = 0;
+
   for (var question in weights.keys) {
-    if (question == 1 || question == 2) {
+    if (question == 1 || question == 2 || question == 10) {
       int? answer = int.tryParse(answers[question - 1].first);
       if (answer != null) {
-        stressLevel += answer * weights[question]!;
+        totalStressLevel += answer * weights[question]!;
+        totalWeight += weights[question]!;
       }
     } else {
-      if ([4, 5, 6, 7, 8, 9, 11].contains(question)) {
-        stressLevel += answers[question - 1].length * weights[question]!;
-      } else {
-        int? answer = int.tryParse(answers[question - 1].first);
-        if (answer != null) {
-          stressLevel += answer * weights[question]!;
-        }
-      }
+      totalStressLevel += answers[question - 1].length * weights[question]!;
+      totalWeight += weights[question]!;
     }
   }
-  return stressLevel / weights.values.reduce((a, b) => a + b);
+
+  // Normalize the total stress level
+  double normalizedStressLevel = totalStressLevel / totalWeight;
+
+  // Cap the normalized stress level at 10 if it exceeds
+  normalizedStressLevel = normalizedStressLevel > 10 ? 10 : normalizedStressLevel;
+
+  // Adjust the normalized stress level to fit within the range [1, 10]
+  normalizedStressLevel = 1 + ((normalizedStressLevel - 1) * (9 / 10));
+
+  return normalizedStressLevel;
 }
+
+
 
 double conductQuestionnaire(List<List<String>> answers) {
   // Define the questions, options, and weights
@@ -62,7 +71,7 @@ double conductQuestionnaire(List<List<String>> answers) {
     7: 3,
     8: 5,
     9: 4,
-    10: 7,
+    10: 5,
     11: 6
   };
 
