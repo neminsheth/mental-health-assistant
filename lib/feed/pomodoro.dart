@@ -29,7 +29,7 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
       leading: GestureDetector(
         onTap: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+              context, MaterialPageRoute(builder: (context) => HomePage(userId: '',)));
         },
         child: Container(
           margin: const EdgeInsets.all(10),

@@ -8,6 +8,9 @@ import 'journal/journal.dart';
 import 'feed/feed.dart';
 
 class HomePage extends StatefulWidget {
+  final String userId;
+
+  const HomePage({required this.userId});
   @override
   _HomePageState createState() => _HomePageState();
 }

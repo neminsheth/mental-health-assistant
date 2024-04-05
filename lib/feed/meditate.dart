@@ -121,7 +121,7 @@ class _MeditateScreenState extends State<MeditateScreen> {
     return AppBar(
       leading: GestureDetector(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId: '',)));
         },
         child: Container(
           margin: const EdgeInsets.all(10),

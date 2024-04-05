@@ -141,7 +141,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
       actions: [
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(userId: '',)));
           },
           child: Container(
             margin: const EdgeInsets.all(10),

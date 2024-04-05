@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:ipd/home.dart'; // Make sure to import HomePage from home.dart
+import 'package:firebase_core/firebase_core.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'authentication/login.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  // Initialize GoogleSignIn
+  GoogleSignIn();
   runApp(MyApp());
 }
 
@@ -19,7 +28,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
-      home: HomePage(), // Ensure HomePage is used as the home widget
+      home: LoginPage(),
     );
   }
 }
