@@ -5,6 +5,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../colors.dart';
 import '../home.dart';
+import 'sign_up.dart'; // Import SignUpPage for navigation to the signup page
 
 class LoginPage extends StatefulWidget {
   @override
@@ -112,27 +113,21 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 30,
-              ),
+              SizedBox(height: 30),
               Container(
                 child: Text(
                   'IPD PROJECT',
                   style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),
                 ),
               ),
-              SizedBox(
-                height: 5,
-              ),
+              SizedBox(height: 5),
               Container(
                 child: Text(
                   'Your mental health assistant :)',
                   style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
                 ),
               ),
-              SizedBox(
-                height: 130,
-              ),
+              SizedBox(height: 130),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -149,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
@@ -167,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 16),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -175,17 +170,33 @@ class _LoginPageState extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(30),
                   color: Colors.white,
                 ),
-                child: Builder(
-                  builder: (context) => MaterialButton(
-                    onPressed: () => _login(context),
-                    child: Text(
-                      'Log In',
-                      style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
-                    ),
+                child: MaterialButton(
+                  onPressed: () => _login(context),
+                  child: Text(
+                    'Log In',
+                    style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
                   ),
                 ),
               ),
-              SizedBox(height: 16.0),
+              SizedBox(height: 16),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => SignUpPage()),
+                  );
+                },
+                child: Text(
+                  'New here ? Create new account :D',
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                ),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Other Sign-in Methods',
+                style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+              ),
+              SizedBox(height: 16),
               Container(
                 width: double.infinity,
                 height: 50,
@@ -200,7 +211,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Image.asset(
                         'assets/images/google_login.png',
-                        height: 20, // Adjust height as needed
+                        height: 20,
                       ),
                       SizedBox(width: 10),
                       Text(
@@ -211,9 +222,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 300,
-              ),
+              SizedBox(height: 300),
               Text(
                 "Built with ❤️ by Your Name",
                 textScaleFactor: 1,

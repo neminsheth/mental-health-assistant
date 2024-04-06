@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ipd/colors.dart';
 import 'package:ipd/general/customButton.dart';
 
+import 'authentication/login.dart';
 import 'general/styleCard.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -134,6 +135,7 @@ class ProfilePage extends StatelessWidget {
               title: "Log Out",
               img: "assets/icons/logout.svg",
               onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
@@ -145,7 +147,25 @@ class ProfilePage extends StatelessWidget {
             StyleCard(
               title: "Delete Account",
               img: "assets/icons/delete.svg",
-              onTap: () {
+              onTap: () async {
+                // // Get the current user
+                // User? user = FirebaseAuth.instance.currentUser;
+                //
+                // if (user != null) {
+                //   // Delete user from Firebase Authentication
+                //   try {
+                //     await user.delete();
+                //
+                //     // Delete user data from Firestore (assuming 'Students' is the collection name)
+                //     await FirebaseFirestore.instance.collection('Students').doc(user.uid).delete();
+                //
+                //     // Navigate to the home screen or any other screen after successful deletion
+                //     Navigator.of(context).pushReplacementNamed('/home');
+                //   } catch (e) {
+                //     // Handle errors, e.g., display an error message to the user
+                //     print("Error deleting account: $e");
+                //   }
+                // }
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
