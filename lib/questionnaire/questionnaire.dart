@@ -281,6 +281,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         await answersCollection.add({
           'answers': flattenedAnswers,
           'timestamp': Timestamp.now(),
+          'stresslevel': stressLevelValue
         });
       } catch (e) {
         print("Error saving answers: $e");
