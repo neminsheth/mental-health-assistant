@@ -121,7 +121,7 @@ class _JournalPageState extends State<JournalPage> {
 
   void _loadJournalEntries() {
     // Fetch journal entries from Firestore collection
-    _firestore.collection('journals').get().then((querySnapshot) {
+    _firestore.collection('journals').orderBy('timestamp', descending: true).get().then((querySnapshot) {
       List<String> entries = [];
       querySnapshot.docs.forEach((doc) {
         // Construct entry string with emoji and note

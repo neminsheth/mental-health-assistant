@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_svg/svg.dart';
 import '../colors.dart';
-import '../home.dart';
-import 'journal.dart';
 
 class JournallingPage extends StatefulWidget {
   @override
@@ -10,9 +10,10 @@ class JournallingPage extends StatefulWidget {
 }
 
 class _JournallingPageState extends State<JournallingPage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController notesController = TextEditingController();
   String selectedEmoji = '';
-  TextEditingController notesController = TextEditingController();
-  List<String> journalEntries = [];
+  String userId = FirebaseAuth.instance.currentUser!.uid;
 
   @override
   Widget build(BuildContext context) {
@@ -68,17 +69,25 @@ class _JournallingPageState extends State<JournallingPage> {
   void _saveJournalEntry() {
     if (selectedEmoji.isNotEmpty && notesController.text.isNotEmpty) {
       String entry = '$selectedEmoji - ${notesController.text}';
-      setState(() {
-        journalEntries.add(entry);
+      // Get the current timestamp
+      Timestamp timestamp = Timestamp.now();
+      // Save entry to Firestore collection with timestamp
+      _firestore.collection('journals').add({
+        'userId': userId,
+        'emoji': selectedEmoji,
+        'journal': notesController.text,
+        'timestamp': timestamp, // Add timestamp field
+      }).then((_) {
+        // Clear the input fields
+        setState(() {
+          selectedEmoji = '';
+          notesController.clear();
+        });
+        // Navigate back to the previous screen (JournalPage)
+        Navigator.pop(context, entry);
+      }).catchError((error) {
+        print('Failed to save journal entry: $error');
       });
-      // Clear the input fields
-      setState(() {
-        selectedEmoji = '';
-        notesController.clear();
-      });
-
-      // Navigate back to the previous screen (JournalPage)
-      Navigator.pop(context, List.from(journalEntries));
     }
   }
 
@@ -161,47 +170,65 @@ class _JournallingPageState extends State<JournallingPage> {
     );
   }
 
+  // Widget _buildJournalEntries() {
+  //   return StreamBuilder<QuerySnapshot>(
+  //     stream: _firestore.collection('journals').where('userId', isEqualTo: userId).snapshots(),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.waiting) {
+  //         return CircularProgressIndicator();
+  //       } else if (snapshot.hasError) {
+  //         return Text('Error: ${snapshot.error}');
+  //       } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+  //         return Column(
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: snapshot.data!.docs.map((doc) {
+  //             return Text('${doc['emoji']} - ${doc['journal']}');
+  //           }).toList(),
+  //         );
+  //       } else {
+  //         return Text('No entries yet.');
+  //       }
+  //     },
+  //   );
+  // }
   Widget _buildJournalEntries() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Journal Entries:',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: AppColors.secondaryblue,
-          ),
-        ),
-        SizedBox(height: 10),
-        if (journalEntries.isEmpty)
-          Text('No entries yet.')
-        else
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: journalEntries.map((entry) => Text(entry)).toList(),
-          ),
-      ],
+    return StreamBuilder<QuerySnapshot>(
+      stream: _firestore.collection('journals').where('userId', isEqualTo: userId).snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError) {
+          print('Error: ${snapshot.error}');
+          return SizedBox(); // Return an empty widget if there's an error
+        } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+          snapshot.data!.docs.forEach((doc) {
+            print('${doc['emoji']} - ${doc['journal']}');
+          });
+          return SizedBox(); // Return an empty widget since we're printing entries directly
+        } else {
+          print('No entries yet.');
+          return SizedBox(); // Return an empty widget since there are no entries
+        }
+      },
     );
   }
+
 
   AppBar appBar() {
     return AppBar(
       title: const Text(
         'Journal Your Thoughts :)',
         style: TextStyle(
-            color: AppColors.secondaryblue,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
+          color: AppColors.secondaryblue,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: Colors.white,
       elevation: 0.0,
       centerTitle: true,
       leading: GestureDetector(
-        onTap: () {
-
-        },
+        onTap: () {},
       ),
       actions: [
         GestureDetector(
@@ -210,14 +237,14 @@ class _JournallingPageState extends State<JournallingPage> {
             margin: const EdgeInsets.all(10),
             alignment: Alignment.center,
             width: 37,
+            decoration: BoxDecoration(
+              color: const Color(0xffF7F8F8),
+              borderRadius: BorderRadius.circular(10),
+            ),
             child: SvgPicture.asset(
               'assets/icons/dots.svg',
               height: 5,
               width: 5,
-            ),
-            decoration: BoxDecoration(
-                color: const Color(0xffF7F8F8),
-                borderRadius: BorderRadius.circular(10)
             ),
           ),
         ),
