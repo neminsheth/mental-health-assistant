@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ipd/colors.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../colors.dart';
 import '../home.dart';
 
 class ToDoListPage extends StatefulWidget {
@@ -10,15 +11,15 @@ class ToDoListPage extends StatefulWidget {
 }
 
 class _ToDoListPageState extends State<ToDoListPage> {
-  final List<Map<String, dynamic>> todosList = [];
-
-  List<Map<String, dynamic>> _foundToDo = [];
-  final _todoController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController _todoController = TextEditingController();
+  List<Map<String, dynamic>> todosList = [];
 
   @override
   void initState() {
-    _foundToDo = List.from(todosList);
     super.initState();
+    // Load to-do items from Firestore when the widget initializes
+    _loadToDoItems();
   }
 
   @override
@@ -27,102 +28,111 @@ class _ToDoListPageState extends State<ToDoListPage> {
       backgroundColor: Colors.white,
       appBar: appBar(),
       body: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildSearchBox(),
-              SizedBox(height: 20),
-              Expanded(
-                child: ListView.builder(
-                  itemCount: _foundToDo.length,
-                  itemBuilder: (context, index) {
-                    return ToDoItem(
-                      todo: _foundToDo[index],
-                      onToDoChanged: _handleToDoChange,
-                      onDeleteItem: _deleteToDoItem,
-                    );
-                  },
-                ),
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: todosList.length,
+                itemBuilder: (context, index) {
+                  return ToDoItem(
+                    todo: todosList[index],
+                    onToDoChanged: _handleToDoChange,
+                    onDeleteItem: _deleteToDoItem,
+                  );
+                },
               ),
-              SizedBox(height: 10),
-              _buildAddTaskInput(),
+            ),
+            SizedBox(height: 10),
+            _buildAddTaskInput(),
           ],
         ),
-        ),
-      );
-
+      ),
+    );
   }
 
   void _handleToDoChange(Map<String, dynamic> todo) {
     setState(() {
       todo['isDone'] = !todo['isDone'];
     });
+    // Update the completed status in Firestore
+    _updateToDoItem(todo);
   }
 
-  void _deleteToDoItem(String id) {
+  void _deleteToDoItem(String id) async {
     setState(() {
       todosList.removeWhere((item) => item['id'] == id);
-      _runFilter(_todoController.text); // Update filtered list after deletion
     });
+    // Delete the item from Firestore
+    await _firestore.collection('todo').doc(id).delete();
   }
 
-  void _addToDoItem(String toDo) {
-    setState(() {
-      todosList.add({
-        'id': DateTime.now().millisecondsSinceEpoch.toString(),
-        'todoText': toDo,
-        'isDone': false,
-      });
-    });
-    _todoController.clear();
-    _runFilter(''); // Update filtered list after addition
-  }
+  void _addToDoItem(String toDo) async {
+    try {
+      // Get the current user
+      User? user = FirebaseAuth.instance.currentUser;
 
-  void _runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isEmpty) {
-      results = List.from(todosList);
-    } else {
-      results = todosList
-          .where((item) => item['todoText']
-          .toLowerCase()
-          .contains(enteredKeyword.toLowerCase()))
-          .toList();
+      if (user != null) {
+        // Retrieve additional user information from Firestore
+        DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+        if (userDoc.exists) {
+          String name = userDoc['name'];
+          String email = userDoc['email'];
+
+          // Add the item to Firestore
+          DocumentReference docRef = await _firestore.collection('todo').add({
+            'userId': user.uid,
+            'userName': name,
+            'userEmail': email,
+            'todoText': toDo,
+            'isDone': false,
+            'createdAt': FieldValue.serverTimestamp(),
+          });
+
+          // Update the local list with the added item
+          setState(() {
+            todosList.add({
+              'id': docRef.id,
+              'todoText': toDo,
+              'isDone': false,
+            });
+          });
+        }
+      }
+    } catch (error) {
+      print('Failed to add to-do item: $error');
     }
-
-    setState(() {
-      _foundToDo = results;
-    });
   }
 
-  Widget _buildSearchBox() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              onChanged: (value) => _runFilter(value),
-              controller: _todoController,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(15),
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: Colors.black,
-                ),
-                border: InputBorder.none,
-                hintText: 'Search',
-                hintStyle: TextStyle(color: Colors.black),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+  void _loadToDoItems() async {
+    try {
+      // Fetch to-do items from Firestore
+      QuerySnapshot querySnapshot = await _firestore.collection('todo').orderBy('createdAt', descending: true).get();
+      List<Map<String, dynamic>> items = [];
+      querySnapshot.docs.forEach((doc) {
+        items.add({
+          'id': doc.id,
+          'todoText': doc['todoText'],
+          'isDone': doc['isDone'],
+        });
+      });
+      // Update the local list with fetched items
+      setState(() {
+        todosList = items;
+      });
+    } catch (error) {
+      print('Failed to load to-do items: $error');
+    }
+  }
+
+  void _updateToDoItem(Map<String, dynamic> todo) async {
+    try {
+      // Update the completed status in Firestore
+      await _firestore.collection('todo').doc(todo['id']).update({'isDone': todo['isDone']});
+    } catch (error) {
+      print('Failed to update to-do item: $error');
+    }
   }
 
   AppBar appBar() {
@@ -130,9 +140,9 @@ class _ToDoListPageState extends State<ToDoListPage> {
       title: const Text(
         'To-do List',
         style: TextStyle(
-            color: AppColors.secondaryblue,
-            fontSize: 18,
-            fontWeight: FontWeight.bold
+          color: AppColors.secondaryblue,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
       backgroundColor: Colors.white,
@@ -185,7 +195,10 @@ class _ToDoListPageState extends State<ToDoListPage> {
         ),
         IconButton(
           onPressed: () {
-            _addToDoItem(_todoController.text);
+            if (_todoController.text.trim().isNotEmpty) {
+              _addToDoItem(_todoController.text);
+              _todoController.clear();
+            }
           },
           icon: Icon(Icons.add, size: 30),
           color: AppColors.secondaryblue,
