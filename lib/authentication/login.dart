@@ -222,12 +222,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 300),
-              Text(
-                "Built with ❤️ by Your Name",
-                textScaleFactor: 1,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+              SizedBox(height: 150),
+              Center(
+                child: Text(
+                  "Built with ❤️",
+                  textScaleFactor: 1,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                ),
               ),
             ],
           ),
