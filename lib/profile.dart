@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ipd/colors.dart';
@@ -148,29 +150,76 @@ class ProfilePage extends StatelessWidget {
               title: "Delete Account",
               img: "assets/icons/delete.svg",
               onTap: () async {
-                // // Get the current user
-                // User? user = FirebaseAuth.instance.currentUser;
-                //
-                // if (user != null) {
-                //   // Delete user from Firebase Authentication
-                //   try {
-                //     await user.delete();
-                //
-                //     // Delete user data from Firestore (assuming 'Students' is the collection name)
-                //     await FirebaseFirestore.instance.collection('Students').doc(user.uid).delete();
-                //
-                //     // Navigate to the home screen or any other screen after successful deletion
-                //     Navigator.of(context).pushReplacementNamed('/home');
-                //   } catch (e) {
-                //     // Handle errors, e.g., display an error message to the user
-                //     print("Error deleting account: $e");
-                //   }
-                // }
+                // Show confirmation dialog
+                bool confirmDelete = await showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Confirmation"),
+                      content: Text("Are you sure you want to delete your account?"),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(false); // Return false if cancel
+                          },
+                          child: Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(true); // Return true if confirm
+                          },
+                          child: Text("Delete"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+
+                // If user confirmed deletion
+                if (confirmDelete ?? false) {
+                  // Get the current user
+                  User? user = FirebaseAuth.instance.currentUser;
+
+                  // Delete user from Firebase Authentication
+                 //try {
+                    await user!.delete();
+
+                    // Delete user data from Firestore
+                    //await FirebaseFirestore.instance.collection('users').doc(user.uid).delete();
+
+                    // Navigate to the login page after successful deletion
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
+                  // } catch (e) {
+                  //   // Handle errors, e.g., display an error message to the user
+                  //   print("Error deleting account: $e");
+                  //   showDialog(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return AlertDialog(
+                  //         title: Text('Error'),
+                  //         content: Text('Failed to delete account. Please try again later.'),
+                  //         actions: [
+                  //           TextButton(
+                  //             onPressed: () {
+                  //               Navigator.pop(context);
+                  //             },
+                  //             child: Text('OK'),
+                  //           ),
+                  //         ],
+                  //       );
+                  //     },
+                  //   );
+                  // }
+                }
               },
+
+
               bgColor: AppColors.primary,
               textColor: AppColors.white,
               description: ":(",
             ),
+
+
             SizedBox(
               height: 15,
             ),
