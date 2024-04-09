@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import '../colors.dart';
 import 'journalling.dart';
 
@@ -9,7 +11,16 @@ class JournalPage extends StatefulWidget {
 }
 
 class _JournalPageState extends State<JournalPage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final TextEditingController _journalController = TextEditingController();
   List<String> journalEntries = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Load journal entries from Firestore when the widget initializes
+    _loadJournalEntries();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +83,7 @@ class _JournalPageState extends State<JournalPage> {
           if (updatedEntries != null) {
             setState(() {
               journalEntries = List.from(updatedEntries);
+              _saveEntryToFirestore(updatedEntries.last); // Save the last entry to Firestore
             });
           }
         },
@@ -106,6 +118,63 @@ class _JournalPageState extends State<JournalPage> {
     List<String> parts = entry.split(' - ');
     return parts[1];
   }
+
+  void _loadJournalEntries() {
+    // Fetch journal entries from Firestore collection
+    _firestore.collection('journals').get().then((querySnapshot) {
+      List<String> entries = [];
+      querySnapshot.docs.forEach((doc) {
+        // Construct entry string with emoji and note
+        String entry = doc['emoji'] + ' - ' + doc['journal'];
+        entries.add(entry);
+      });
+      setState(() {
+        journalEntries = entries;
+      });
+    }).catchError((error) {
+      print('Failed to load journal entries: $error');
+    });
+  }
+
+
+  void _saveEntryToFirestore(String entry) async {
+    // Extract emoji and journal text from the entry
+    List<String> parts = entry.split(' - ');
+    String emoji = parts[0];
+    String journal = parts[1];
+
+    try {
+      // Get the current user
+      User? user = FirebaseAuth.instance.currentUser;
+
+      if (user != null) {
+        // Retrieve additional user information from Firestore
+        DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
+        if (userDoc.exists) {
+          String name = userDoc['name'];
+          String email = userDoc['email'];
+
+          // Save entry to Firestore collection
+          await _firestore.collection('journals').add({
+            'name': name,
+            'email': email,
+            'emoji': emoji,
+            'journal': journal,
+            // Add additional fields like name and email if needed
+          });
+          print('Journal entry saved to Firestore');
+        } else {
+          print('User document does not exist');
+        }
+      } else {
+        print('No user is currently logged in');
+      }
+    } catch (error) {
+      print('Failed to save journal entry: $error');
+    }
+  }
+
+
 
   AppBar appBar() {
     return AppBar(
