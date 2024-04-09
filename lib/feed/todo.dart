@@ -16,11 +16,15 @@ class _ToDoListPageState extends State<ToDoListPage> {
   List<Map<String, dynamic>> todosList = [];
 
   @override
+  @override
   void initState() {
     super.initState();
-    // Load to-do items from Firestore when the widget initializes
-    _loadToDoItems();
+    // Get the current user's email
+    String userEmail = FirebaseAuth.instance.currentUser?.email ?? '';
+    // Load to-do items from Firestore for the current user
+    _loadToDoItems(userEmail);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -105,10 +109,15 @@ class _ToDoListPageState extends State<ToDoListPage> {
     }
   }
 
-  void _loadToDoItems() async {
+  void _loadToDoItems(String userEmail) async {
     try {
-      // Fetch to-do items from Firestore
-      QuerySnapshot querySnapshot = await _firestore.collection('todo').orderBy('createdAt', descending: true).get();
+      // Fetch to-do items from Firestore for the specific user
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('todo')
+          .where('userEmail', isEqualTo: userEmail) // Filter by user's email
+          .orderBy('createdAt', descending: true)
+          .get();
+
       List<Map<String, dynamic>> items = [];
       querySnapshot.docs.forEach((doc) {
         items.add({
@@ -117,6 +126,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
           'isDone': doc['isDone'],
         });
       });
+
       // Update the local list with fetched items
       setState(() {
         todosList = items;
@@ -125,6 +135,7 @@ class _ToDoListPageState extends State<ToDoListPage> {
       print('Failed to load to-do items: $error');
     }
   }
+
 
   void _updateToDoItem(Map<String, dynamic> todo) async {
     try {
