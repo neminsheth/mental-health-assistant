@@ -26,53 +26,56 @@ class _JournalPageState extends State<JournalPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'List of Journal Entries:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: AppColors.secondaryblue,
+      body: RefreshIndicator(
+        onRefresh: _refreshJournalEntries,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'List of Journal Entries:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.secondaryblue,
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: journalEntries.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                  child: Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: AppColors.secondaryblue),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          _getEmoji(journalEntries[index]), // Display emoji
-                          style: TextStyle(fontSize: 20), // Font size for emoji
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Text(
-                            _getNoteText(journalEntries[index]), // Display note text
-                            style: TextStyle(fontFamily: 'Poppins'), // Set font to Poppins
+            Expanded(
+              child: ListView.builder(
+                itemCount: journalEntries.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: AppColors.secondaryblue),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            _getEmoji(journalEntries[index]), // Display emoji
+                            style: TextStyle(fontSize: 20), // Font size for emoji
                           ),
-                        ),
-                      ],
+                          SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              _getNoteText(journalEntries[index]), // Display note text
+                              style: TextStyle(fontFamily: 'Poppins'), // Set font to Poppins
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
@@ -91,6 +94,10 @@ class _JournalPageState extends State<JournalPage> {
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> _refreshJournalEntries() async {
+    await _loadJournalEntries();
   }
 
   String _getEmoji(String entry) {
@@ -119,9 +126,10 @@ class _JournalPageState extends State<JournalPage> {
     return parts[1];
   }
 
-  void _loadJournalEntries() {
+  Future<void> _loadJournalEntries() async {
     // Fetch journal entries from Firestore collection
-    _firestore.collection('journals').orderBy('timestamp', descending: true).get().then((querySnapshot) {
+    try {
+      QuerySnapshot querySnapshot = await _firestore.collection('journals').orderBy('timestamp', descending: true).get();
       List<String> entries = [];
       querySnapshot.docs.forEach((doc) {
         // Construct entry string with emoji and note
@@ -131,50 +139,14 @@ class _JournalPageState extends State<JournalPage> {
       setState(() {
         journalEntries = entries;
       });
-    }).catchError((error) {
-      print('Failed to load journal entries: $error');
-    });
-  }
-
-
-  void _saveEntryToFirestore(String entry) async {
-    // Extract emoji and journal text from the entry
-    List<String> parts = entry.split(' - ');
-    String emoji = parts[0];
-    String journal = parts[1];
-
-    try {
-      // Get the current user
-      User? user = FirebaseAuth.instance.currentUser;
-
-      if (user != null) {
-        // Retrieve additional user information from Firestore
-        DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
-        if (userDoc.exists) {
-          String name = userDoc['name'];
-          String email = userDoc['email'];
-
-          // Save entry to Firestore collection
-          await _firestore.collection('journals').add({
-            'name': name,
-            'email': email,
-            'emoji': emoji,
-            'journal': journal,
-            // Add additional fields like name and email if needed
-          });
-          print('Journal entry saved to Firestore');
-        } else {
-          print('User document does not exist');
-        }
-      } else {
-        print('No user is currently logged in');
-      }
     } catch (error) {
-      print('Failed to save journal entry: $error');
+      print('Failed to load journal entries: $error');
     }
   }
 
-
+  void _saveEntryToFirestore(String entry) async {
+    // Your save entry code here...
+  }
 
   AppBar appBar() {
     return AppBar(
@@ -214,3 +186,4 @@ class _JournalPageState extends State<JournalPage> {
     );
   }
 }
+
