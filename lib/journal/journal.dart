@@ -15,6 +15,7 @@ class _JournalPageState extends State<JournalPage> {
   final TextEditingController _journalController = TextEditingController();
   List<String> journalEntries = [];
 
+
   @override
   void initState() {
     super.initState();
@@ -127,9 +128,16 @@ class _JournalPageState extends State<JournalPage> {
   }
 
   Future<void> _loadJournalEntries() async {
-    // Fetch journal entries from Firestore collection
     try {
-      QuerySnapshot querySnapshot = await _firestore.collection('journals').orderBy('timestamp', descending: true).get();
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      // Fetch journal entries from Firestore collection
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('journals')
+          .where('userId', isEqualTo: userId) // Filter by userId
+          // .where('userEmail', isEqualTo: FirebaseAuth.instance.currentUser!.email) // Filter by userEmail
+          .orderBy('timestamp', descending: true)
+          .get();
+
       List<String> entries = [];
       querySnapshot.docs.forEach((doc) {
         // Construct entry string with emoji and note
@@ -143,6 +151,7 @@ class _JournalPageState extends State<JournalPage> {
       print('Failed to load journal entries: $error');
     }
   }
+
 
   void _saveEntryToFirestore(String entry) async {
     // Your save entry code here...

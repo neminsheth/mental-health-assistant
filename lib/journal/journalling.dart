@@ -71,9 +71,12 @@ class _JournallingPageState extends State<JournallingPage> {
       String entry = '$selectedEmoji - ${notesController.text}';
       // Get the current timestamp
       Timestamp timestamp = Timestamp.now();
-      // Save entry to Firestore collection with timestamp
+      // Get the current user's email
+      String userEmail = FirebaseAuth.instance.currentUser!.email ?? '';
+      // Save entry to Firestore collection with timestamp and user email
       _firestore.collection('journals').add({
         'userId': userId,
+        'userEmail': userEmail, // Add userEmail field
         'emoji': selectedEmoji,
         'journal': notesController.text,
         'timestamp': timestamp, // Add timestamp field
@@ -90,6 +93,7 @@ class _JournallingPageState extends State<JournallingPage> {
       });
     }
   }
+
 
 
   Widget _buildEmojiContainer() {
@@ -193,25 +197,39 @@ class _JournallingPageState extends State<JournallingPage> {
   // }
   Widget _buildJournalEntries() {
     return StreamBuilder<QuerySnapshot>(
-      stream: _firestore.collection('journals').where('userId', isEqualTo: userId).snapshots(),
+      stream: _firestore
+          .collection('journals')
+          .where('userEmail', isEqualTo: FirebaseAuth.instance.currentUser!.email)
+          .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
           print('Error: ${snapshot.error}');
-          return SizedBox(); // Return an empty widget if there's an error
-        } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-          snapshot.data!.docs.forEach((doc) {
-            print('${doc['emoji']} - ${doc['journal']}');
-          });
-          return SizedBox(); // Return an empty widget since we're printing entries directly
+          return Text('Error: ${snapshot.error}');
+        } else if (snapshot.hasData) {
+          final journals = snapshot.data!.docs;
+          if (journals.isEmpty) {
+            return Text('No entries yet.');
+          }
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: journals.length,
+            itemBuilder: (context, index) {
+              final journal = journals[index].data() as Map<String, dynamic>;
+              return ListTile(
+                title: Text('${journal['emoji']} - ${journal['journal']}'),
+              );
+            },
+          );
         } else {
-          print('No entries yet.');
-          return SizedBox(); // Return an empty widget since there are no entries
+          return Text('No entries yet.');
         }
       },
     );
   }
+
+
 
 
   AppBar appBar() {
