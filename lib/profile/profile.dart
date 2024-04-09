@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ipd/colors.dart';
 import 'package:ipd/general/customButton.dart';
+import 'package:ipd/profile/notification.dart';
 
-import 'authentication/login.dart';
-import 'general/styleCard.dart';
+import '../authentication/login.dart';
+import '../general/styleCard.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -101,6 +102,7 @@ class ProfilePage extends StatelessWidget {
               title: "Notification",
               img: "assets/icons/notfication.svg",
               onTap: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
               },
               bgColor: AppColors.primary,
               textColor: AppColors.white,
