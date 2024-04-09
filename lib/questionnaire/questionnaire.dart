@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ipd/colors.dart';
@@ -225,7 +226,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     );
   }
 
-  void _submitAnswers() {
+  void _submitAnswers() async {
     // Show loading screen
     showDialog(
       context: context,
@@ -238,7 +239,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     );
 
     // Delay for 3 seconds
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () async {
       // After 3 seconds, calculate stress level
       double stressLevelValue = conductQuestionnaire(_answers);
       int stressLevel = stressLevelValue.round();
@@ -270,6 +271,21 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
           imagePath = 'assets/images/image_one.png';
       }
 
+      // Convert nested arrays to strings
+      List<String> flattenedAnswers = _answers.map((list) => list.join(',')).toList();
+
+      // Save flattened answers and timestamp to Firestore
+      try {
+        CollectionReference answersCollection =
+        FirebaseFirestore.instance.collection('answers');
+        await answersCollection.add({
+          'answers': flattenedAnswers,
+          'timestamp': Timestamp.now(),
+        });
+      } catch (e) {
+        print("Error saving answers: $e");
+      }
+
       // Dismiss loading screen dialog
       Navigator.pop(context);
 
@@ -283,6 +299,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       print(stressLevelValue);
     });
   }
+
 
   AppBar appBar() {
     return AppBar(
