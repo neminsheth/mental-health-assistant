@@ -48,13 +48,14 @@ class _SignUpPageState extends State<SignUpPage> {
         'email': email,
         // Add more fields as needed
       });
-
+      print("Sign up yeahhhhh");
       // Navigate to login page
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginPage()),
       );
     } catch (error) {
+      print('Sign up error: $error');
       showDialog(
         context: context,
         builder: (context) {
