@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ipd/colors.dart';
 import 'package:ipd/feed/books/book_screen.dart';
+import 'package:ipd/feed/podcast.dart';
 import 'package:ipd/feed/pomodoro.dart';
 import 'package:ipd/feed/quotes.dart';
 import 'package:ipd/feed/sleep/sleep_tracker_view.dart';
@@ -129,7 +130,10 @@ class FeedPage extends StatelessWidget {
                             'Podcast',
                             'assets/images/podcast_outlineimg.png',
                                 () {
-                              // Navigate to journal page
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => podcast()),
+                                  );
                             },
                             widthRatio,
                             heightRatio,
