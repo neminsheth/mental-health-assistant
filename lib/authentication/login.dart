@@ -107,132 +107,140 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.secondaryblue,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 30),
-              Container(
-                child: Text(
-                  'IPD PROJECT',
-                  style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),
-                ),
-              ),
-              SizedBox(height: 5),
-              Container(
-                child: Text(
-                  'Your mental health assistant :)',
-                  style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
-                ),
-              ),
-              SizedBox(height: 130),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.white, width: 3),
-                ),
-                child: TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
-                    hintText: 'Email',
-                    hintStyle: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
-                  ),
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(color: Colors.white, width: 3),
-                ),
-                child: TextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.all(16.0),
-                    hintText: 'Password',
-                    hintStyle: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
-                  ),
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
-              SizedBox(height: 16),
-              Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.white,
-                ),
-                child: MaterialButton(
-                  onPressed: () => _login(context),
+      //backgroundColor: AppColors.secondaryblue,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/background_feed.jpeg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(height: 30),
+                Container(
                   child: Text(
-                    'Log In',
-                    style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+                    'IPD PROJECT',
+                    style: GoogleFonts.poppins(fontSize: 40, color: Colors.white),
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => OnboardingScreen()),
-                  );
-                },
-                child: Text(
-                  'New here ? Create new account :D',
-                  style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
-                ),
-              ),
-              SizedBox(height: 16),
-              Text(
-                'Other Sign-in Methods',
-                style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
-              ),
-              SizedBox(height: 16),
-              Container(
-                width: double.infinity,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.white,
-                ),
-                child: MaterialButton(
-                  onPressed: () => _signInWithGoogle(context),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/google_login.png',
-                        height: 20,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'Sign in with Google',
-                        style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
-                      ),
-                    ],
+                SizedBox(height: 5),
+                Container(
+                  child: Text(
+                    'Your mental health assistant :)',
+                    style: GoogleFonts.poppins(fontSize: 20, color: Colors.white),
                   ),
                 ),
-              ),
-              SizedBox(height: 150),
-              Center(
-                child: Text(
-                  "Built with ❤️",
-                  textScaleFactor: 1,
-                  textAlign: TextAlign.center,
+                SizedBox(height: 130),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white, width: 3),
+                  ),
+                  child: TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(16.0),
+                      hintText: 'Email',
+                      hintStyle: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                    ),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white, width: 3),
+                  ),
+                  child: TextField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.all(16.0),
+                      hintText: 'Password',
+                      hintStyle: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                    ),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                  ),
+                  child: MaterialButton(
+                    onPressed: () => _login(context),
+                    child: Text(
+                      'Log In',
+                      style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => OnboardingScreen()),
+                    );
+                  },
+                  child: Text(
+                    'New here ? Create new account :D',
+                    style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Other Sign-in Methods',
                   style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
                 ),
-              ),
-            ],
+                SizedBox(height: 16),
+                Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.white,
+                  ),
+                  child: MaterialButton(
+                    onPressed: () => _signInWithGoogle(context),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/google_login.png',
+                          height: 20,
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'Sign in with Google',
+                          style: GoogleFonts.poppins(fontSize: 16, color: Colors.black),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 150),
+                Center(
+                  child: Text(
+                    "Built with ❤️",
+                    textScaleFactor: 1,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.poppins(fontSize: 16, color: Colors.white),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
