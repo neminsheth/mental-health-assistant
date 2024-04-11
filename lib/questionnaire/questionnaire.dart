@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ipd/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:ipd/models/answers.dart';
 import 'logic.dart';
 
 class QuestionnairePage extends StatefulWidget {
@@ -15,6 +16,18 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   int _currentPage = 0;
   List<List<String>> _answers = List.filled(11, []);
   double _sliderValue = 5.0;
+
+  String? _classLevel;
+  String? _gender;
+  String? _dailyStress;
+  List<String> _usualCausesOfStress = [];
+  List<String> _behavioralEffectsOfStress = [];
+  List<String> _emotionalEffectsOfStress = [];
+  List<String> _cognitiveEffectsOfStress = [];
+  List<String> _socialEffectsOfStress = [];
+  List<String> _methodsToRelieveStress = [];
+  double _abilityToHandleStress = 5.0;
+  List<String> _pressingStressFactors = [];
 
   void _nextPage() {
     if (_currentPage < 10) {
@@ -226,7 +239,11 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     );
   }
 
+
   void _submitAnswers() async {
+    // Answers answer= new Answers(
+    //   Answers(dailyStress110: "",)
+    // )
     // Show loading screen
     showDialog(
       context: context,
@@ -270,6 +287,19 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         default:
           imagePath = 'assets/images/image_one.png';
       }
+
+      // Assign selected answers to individual variables
+      _classLevel = _answers[0].isNotEmpty ? _answers[0][0] : null;
+      _gender = _answers[1].isNotEmpty ? _answers[1][0] : null;
+      _dailyStress = _answers[2].isNotEmpty ? _answers[2][0] : null;
+      _usualCausesOfStress = _answers[3];
+      _behavioralEffectsOfStress = _answers[4];
+      _emotionalEffectsOfStress = _answers[5];
+      _cognitiveEffectsOfStress = _answers[6];
+      _socialEffectsOfStress = _answers[7];
+      _methodsToRelieveStress = _answers[8];
+      _abilityToHandleStress = _sliderValue;
+      _pressingStressFactors = _answers[9];
 
       // Convert nested arrays to strings
       List<String> flattenedAnswers = _answers.map((list) => list.join(',')).toList();
