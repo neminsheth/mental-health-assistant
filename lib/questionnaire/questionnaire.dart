@@ -292,7 +292,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       // Create an instance of Answers class
       Answers answers = Answers(
         dailyStress110: double.parse(_dailyStress ?? '0'),
-        stressCauses: _usualCausesOfStress.join(', '),
+        stressCauses: _usualCausesOfStress.join(", "),
         behavioralEffects: _behavioralEffectsOfStress.join(', '),
         psychologicalEffects: _emotionalEffectsOfStress.join(', '),
         cognitiveEffects: _cognitiveEffectsOfStress.join(', '),
@@ -320,8 +320,8 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
 
       // Print each set of answers separately for their respective questions
-      print('Class Level: $_classLevel');
-      print('Gender: $_gender');
+      // print('Class Level: $_classLevel');
+      // print('Gender: $_gender');
       print('Daily Stress: $_dailyStress');
       print('Usual Causes of Stress: ${answers.stressCauses}');
       print('Behavioral Effects of Stress: ${answers.behavioralEffects}');
