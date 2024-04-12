@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart';
 import 'package:ipd/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:ipd/models/answers.dart';
 import 'logic.dart';
+import "package:http/http.dart" as http;
 
 class QuestionnairePage extends StatefulWidget {
   @override
@@ -241,9 +245,6 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
 
   void _submitAnswers() async {
-    // Answers answer= new Answers(
-    //   Answers(dailyStress110: "",)
-    // )
     // Show loading screen
     showDialog(
       context: context,
@@ -256,7 +257,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     );
 
     // Delay for 3 seconds
-    Future.delayed(Duration(seconds: 3), () async {
+    Future.delayed(Duration(seconds: 0), () async {
       // After 3 seconds, calculate stress level
       double stressLevelValue = conductQuestionnaire(_answers);
       int stressLevel = stressLevelValue.round();
@@ -288,31 +289,54 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
           imagePath = 'assets/images/image_one.png';
       }
 
-      // Assign selected answers to individual variables
-      _classLevel = _answers[0].isNotEmpty ? _answers[0][0] : null;
-      _gender = _answers[1].isNotEmpty ? _answers[1][0] : null;
-      _dailyStress = _answers[2].isNotEmpty ? _answers[2][0] : null;
-      _usualCausesOfStress = _answers[3];
-      _behavioralEffectsOfStress = _answers[4];
-      _emotionalEffectsOfStress = _answers[5];
-      _cognitiveEffectsOfStress = _answers[6];
-      _socialEffectsOfStress = _answers[7];
-      _methodsToRelieveStress = _answers[8];
-      _abilityToHandleStress = _sliderValue;
-      _pressingStressFactors = _answers[9];
+      // Create an instance of Answers class
+      Answers answers = Answers(
+        dailyStress110: double.parse(_dailyStress ?? '0'),
+        stressCauses: _usualCausesOfStress.join(', '),
+        behavioralEffects: _behavioralEffectsOfStress.join(', '),
+        psychologicalEffects: _emotionalEffectsOfStress.join(', '),
+        cognitiveEffects: _cognitiveEffectsOfStress.join(', '),
+        socialEffects: _socialEffectsOfStress.join(', '),
+        stressRelievers: _methodsToRelieveStress.join(', '),
+        stressHandling110: _sliderValue.toInt(),
+        pressingAcademicStressors: _pressingStressFactors.join(', '),
+      );
+      print("hello abhishek ");
+      String url = "https://e58f-2409-40c0-a-7f6f-445e-ccdb-7f5e-27fd.ngrok-free.app/predict";
 
-      // Convert nested arrays to strings
-      List<String> flattenedAnswers = _answers.map((list) => list.join(',')).toList();
+      Uri uri = Uri.parse(url);
+      
+      Map<String, dynamic> body = answers.toJson();
+      
+      final Response res =  await http.post(uri, headers:  <String , String>{'Content-Type':'application/json'}, body: jsonEncode(body));
 
-      // Save flattened answers and timestamp to Firestore
+      print(res.body);
+
+      if(res.statusCode == 200){
+        Map<String , dynamic> value = jsonDecode(res.body);
+        double stress = value['predicted_stress_level'];
+        print("nemin cutie : " + stress.toString());
+      }
+
+
+      // Print each set of answers separately for their respective questions
+      print('Class Level: $_classLevel');
+      print('Gender: $_gender');
+      print('Daily Stress: $_dailyStress');
+      print('Usual Causes of Stress: ${answers.stressCauses}');
+      print('Behavioral Effects of Stress: ${answers.behavioralEffects}');
+      print('Emotional Effects of Stress: ${answers.psychologicalEffects}');
+      print('Cognitive Effects of Stress: ${answers.cognitiveEffects}');
+      print('Social Effects of Stress: ${answers.socialEffects}');
+      print('Methods to Relieve Stress: ${answers.stressRelievers}');
+      print('Ability to Handle Stress: ${answers.stressHandling110}');
+      print('Pressing Stress Factors: ${answers.pressingAcademicStressors}');
+
+      // Save the answers to Firestore
       try {
         CollectionReference answersCollection =
         FirebaseFirestore.instance.collection('answers');
-        await answersCollection.add({
-          'answers': flattenedAnswers,
-          'timestamp': Timestamp.now(),
-          'stresslevel': stressLevelValue
-        });
+        await answersCollection.add(answers.toJson());
       } catch (e) {
         print("Error saving answers: $e");
       }
@@ -330,6 +354,9 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       print(stressLevelValue);
     });
   }
+
+
+
 
 
   AppBar appBar() {
