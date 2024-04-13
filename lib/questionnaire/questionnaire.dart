@@ -35,7 +35,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
 
   void _nextPage() {
     if (_currentPage < 10) {
-      _pageController.nextPage(duration: Duration(milliseconds: 300), curve: Curves.ease);
+      _pageController.nextPage(duration: Duration(milliseconds: 200), curve: Curves.ease);
       setState(() {
         _currentPage++;
       });
@@ -302,7 +302,7 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
         pressingAcademicStressors: _pressingStressFactors.join(', '),
       );
       print("hello abhishek ");
-      String url = "https://e58f-2409-40c0-a-7f6f-445e-ccdb-7f5e-27fd.ngrok-free.app/predict";
+      String url = "https://8c57-2409-40c0-107b-b51-a9e4-7-7b60-313.ngrok-free.app/predict";
 
       Uri uri = Uri.parse(url);
       
@@ -315,7 +315,9 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       if(res.statusCode == 200){
         Map<String , dynamic> value = jsonDecode(res.body);
         double stress = value['predicted_stress_level'];
-        print("nemin cutie : " + stress.toString());
+        print("Outputttttt : " + stress.toString());
+        await saveStressToFirebase(stress);
+        print("predicted_stress_level saved to firebase");
       }
 
 
@@ -391,6 +393,17 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
     );
   }
 }
+
+Future<void> saveStressToFirebase(double stress) async {
+  try {
+    CollectionReference stressCollection = FirebaseFirestore.instance.collection('stress');
+    await stressCollection.add({'stress_level': stress});
+    print('Stress level saved to Firebase: $stress');
+  } catch (e) {
+    print("Error saving stress level: $e");
+  }
+}
+
 
 class ImageScreen extends StatelessWidget {
   final String imagePath;
